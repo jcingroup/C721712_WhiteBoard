@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "寶程國際物業活動剪影";
+    ViewBag.BodyClass = "News";
+    ViewBag.subnav = "Activity";
+}
+
+<header class="bg-pattern p-y-48">
+    <h1 class="title">@ViewBag.Title</h1>
+    @Html.Partial("subnav")
+</header>
+
+<section class="wrap row-x-0 m-y-64">
+    <figure class="album">
+        <img src="~/Content/images/pic.jpg" alt="插圖">
+        <a href="~/Activity/Photo"></a>
+        <figcaption>
+            <h4>保全人員職前訓練</h4>
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </figcaption>
+    </figure>
+
+    <figure class="album">
+        <img src="~/Content/images/pic.jpg" alt="插圖">
+        <a href="~/Activity/Photo"></a>
+        <figcaption>
+            <h4>保全人員消防訓練</h4>
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </figcaption>
+    </figure>
+
+    <figure class="album">
+        <img src="~/Content/images/pic.jpg" alt="插圖">
+        <a href="~/Activity/Photo"></a>
+        <figcaption>
+            <h4>保全人員小組會議</h4>
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </figcaption>
+    </figure>
+</section>

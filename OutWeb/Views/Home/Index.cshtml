@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "首頁";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/Content/css/vendor/swiper.min.css">
+}
+@section scripts {
+    <script src="~/Content/js/swiper.min.js"></script>
+    <script>
+        var swiperBanner = new Swiper(document.getElementById('banner'), {
+            pagination: '.swiper-pager',
+            paginationClickable: true,
+            autoplay: 5000,
+            autoplayDisableOnInteraction: false,
+            speed: 1000,
+            // grabCursor: true,
+            effect: 'fade'
+        });
+    </script>
+}
+
+<section id="banner" class="swiper-container">
+    <main id="setBanner" class="swiper-wrapper">
+        <div class="swiper-slide"><img src="~/Content/images/index/banner.jpg" alt="b1"></div>
+    </main>
+</section>
+
+<section class="bg-pattern group">
+    <h2 class="title m-b-48">寶程事業群</h2>
+    <div class="group-item">寶程國際物業<br>股份有限公司</div>
+    <div class="group-item">寶程寶程國際保全<br>股份有限公司</div>
+    <div class="group-item">寶程公寓大廈<br>管理維護有限公司</div>
+</section>
+
+<section class="bg-info news">
+    <div class="wrap">
+        <article class="col-6 p-y-64 p-r-32 bg-info">
+            <h2 class="font-brush underline text-white">Latest News</h2>
+            <ul class="news-list list-unstyled">
+                @* 套程式 *@
+                <li>
+                    <a href="~/News/Content">寶程之光/淡水蔚城社區榮獲2017年優良公寓大廈獎</a>
+                    <small class="block">2017-06-06</small>
+                </li>
+                <li>
+                    <a href="~/News/Content">恭賀本公司獲得經濟部中小企業最佳品質服務獎</a>
+                    <small class="block">2017-06-01</small>
+                </li>
+                <li>
+                    <a href="~/News/Content">寶程國際物業將進駐帝寶社區管理服務</a>
+                    <small class="block">2017-05-15</small>
+                </li>
+                <li>
+                    <a href="~/News/Content">寶程國際物業提供社區各種表單免費下載</a>
+                    <small class="block">2017-05-08</small>
+                </li>
+                <li>
+                    <a href="~/News/Content">寶程國際物業董事長獲得總統府優良企業經營獎</a>
+                    <small class="block">2017-05-03</small>
+                </li>
+            </ul>
+            <a href="~/News" class="btn m-t-32">MORE</a>
+        </article>
+    </div>
+</section>
+
+<section class="work bg-white">
+    <div class="wrap cell-row">
+        <a href="~/Home/Security" class="cell w1">
+            安全防護
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </a>
+        <a href="~/Home/Affair" class="cell w2">
+            事務管理
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </a>
+        <a href="~/Home/Equipment" class="cell w3">
+            設備維護
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </a>
+    </div>
+    <div class="wrap cell-row">
+        <a href="~/Home/Clean" class="cell w4">
+            環保清潔
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </a>
+        <a href="~/Home/Park" class="cell w5">
+            停車管理
+            <i class="oi" data-glyph="magnifying-glass"></i>
+        </a>
+
+        <div class="cell deck">
+            <span class="font-brush">Safety & Service</span>
+        </div>
+    </div>
+</section>
+
+@* 彈出視窗 *@
+@* <div class="modal" id="popup">
+    <main class="modal-content">
+        <button class="modal-close" onclick="document.getElementById('popup').style.display='none'">&#215;</button>
+        <img src="~/Content/images/index/notice.jpg">
+    </main>
+</div> *@

@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "變更密碼";
+    ViewBag.subnav = "n4";
+    ViewBag.subnav2 = "ChangPW";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>系統設定</li>
+        <li>&#10095; @ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb</h3>
+
+<form class="form-list">
+    <dl class="fields">
+        <dt class="col-2">目前密碼</dt>
+        <dd class="col-5">
+            <input type="text" class="form-element" required>
+        </dd>
+    </dl>
+    <dl class="fields">
+        <dt class="col-2">新密碼</dt>
+        <dd class="col-5">
+            <input type="text" class="form-element">
+        </dd>
+        @* 有限制密碼規則時才顯示
+        <dd class="col-4 text-danger">*密碼規則</dd> *@
+    </dl>
+    <dl class="fields">
+        <dt class="col-2">確認密碼</dt>
+        <dd class="col-5">
+            <input type="text" class="form-element">
+        </dd>
+    </dl>
+    <footer class="submit-bar clear m-t-24">
+        <button type="button" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+    </footer>
+</form>
