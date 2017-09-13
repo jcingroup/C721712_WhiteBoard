@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.mainName = "寶程國際物業管理系統";
+    ViewBag.mainName = "WTB 懷特博管理系統";
 }
 
 <!DOCTYPE html>
@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.mainName</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
     <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
     <link rel="stylesheet" href="~/Content/css/grid.css">
     @if (ViewBag.IsFirstPage)
@@ -27,7 +28,7 @@
         @if (!ViewBag.IsFirstPage)
         {
             <header id="header">
-                <h1 class="logo">@ViewBag.mainName</h1>
+                <h1 class="site-title">@ViewBag.mainName</h1>
 
                 <nav class="navbar">
                     <span class="nav-link">登入身份: 管理者</span>
@@ -59,12 +60,20 @@
                 <aside id="sidebar">
                     <h6 class="oi" data-glyph="menu">功能選單 MENU</h6>
 
-                    <a href="~/Manage/NewsList" class='collapse-toggle oi @(ViewBag.subnav == "n1" ? "active" : "")' data-glyph="bell">最新消息管理</a>
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Products" ? "active" : "")' data-glyph="beaker">產品管理</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Products" ? "in" : "")'>
+                        <a href="~/Manage/ProductKind" class='@(ViewBag.subnav2 == "ProductKind" ? "active" : "")'>分類維護</a>
+                        <a href="~/Manage/ProductList" class='@(ViewBag.subnav2 == "Product" ? "active" : "")'>產品資料維護</a>
+                    </nav>
 
-                    <a href="~/Manage/ActivityList" class='collapse-toggle oi @(ViewBag.subnav == "n2" ? "active" : "")' data-glyph="flag">活動剪影管理</a>
+                    <a href="~/Manage/NewsList" class='collapse-toggle oi @(ViewBag.subnav == "News" ? "active" : "")' data-glyph="bell">消息報報管理</a>
 
-                    <header class='collapse-toggle oi @(ViewBag.subnav == "n4" ? "active" : "")' data-glyph="cog">系統設定</header>
-                    <nav class='collapse-content @(ViewBag.subnav == "n4" ? "in" : "")'>
+                    <a href="~/Manage/WorksList" class='collapse-toggle oi @(ViewBag.subnav == "Works" ? "active" : "")' data-glyph="flag">案例分享管理</a>
+
+                    <a href="~/Manage/Agents" class='collapse-toggle oi @(ViewBag.subnav == "Agents" ? "active" : "")' data-glyph="clipboard">代理商管理</a>
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Cog" ? "active" : "")' data-glyph="cog">系統設定</header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Cog" ? "in" : "")'>
                         <a href="~/Manage/ChangePW" class='@(ViewBag.subnav2 == "ChangPW" ? "active" : "")'>變更密碼</a>
                     </nav>
                 </aside><!-- sidebar //-->
@@ -74,10 +83,12 @@
 
     </div><!-- wrapper //-->
 
-    <footer id="footer">
-        <div class="copyright text-muted font-sp">Powered By <a href="http://www.jcin.com.tw" target="new">JCIN INFORMATION CO.</a></div>
-        <small>本網站適用 Chrome, firefox, IE10.0+, 最佳瀏覽解析度為 1280*800 以上</small>
-    </footer><!-- footer //-->
+    @if (ViewBag.IsFirstPage) {
+        <footer id="footer" class="text-muted">
+            <div class="copyright font-sp">Powered By <a class="hover-info" href="http://www.jcin.com.tw" target="new">JCIN INFORMATION CO.</a></div>
+            <small>本網站適用 Chrome, firefox, IE10.0+, 最佳瀏覽解析度為 1280*800 以上</small>
+        </footer><!-- footer //-->
+    }
 
     @* 引用 jQuery *@
     <script src="//code.jquery.com/jquery-latest.min.js"></script>

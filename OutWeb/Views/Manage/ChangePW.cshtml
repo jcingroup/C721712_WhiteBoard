@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_MLayout.cshtml";
     ViewBag.Crumb = "變更密碼";
-    ViewBag.subnav = "n4";
+    ViewBag.subnav = "Cog";
     ViewBag.subnav2 = "ChangPW";
 }
 
@@ -16,27 +16,27 @@
 <h3 class="title">@ViewBag.Crumb</h3>
 
 <form class="form-list">
-    <dl class="fields">
+    <dl class="field">
         <dt class="col-2">目前密碼</dt>
         <dd class="col-5">
-            <input type="text" class="form-element" required>
+            <input type="text" required>
         </dd>
     </dl>
-    <dl class="fields">
+    <dl class="field">
         <dt class="col-2">新密碼</dt>
         <dd class="col-5">
-            <input type="text" class="form-element">
+            <input type="text">
         </dd>
         @* 有限制密碼規則時才顯示
         <dd class="col-4 text-danger">*密碼規則</dd> *@
     </dl>
-    <dl class="fields">
+    <dl class="field">
         <dt class="col-2">確認密碼</dt>
         <dd class="col-5">
-            <input type="text" class="form-element">
+            <input type="text">
         </dd>
     </dl>
-    <footer class="submit-bar clear m-t-24">
+    <footer class="submit-bar clear mt-24">
         <button type="button" class="btn success oi" data-glyph="circle-check">
             確認儲存
         </button>

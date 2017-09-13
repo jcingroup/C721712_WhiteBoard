@@ -1,8 +1,8 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_MLayout.cshtml";
-    ViewBag.Crumb = "最新消息管理";
-    ViewBag.subnav = "n1";
+    ViewBag.Crumb = "消息報報管理";
+    ViewBag.subnav = "News";
 }
 
 @section Breadcrumb {
@@ -14,27 +14,43 @@
 <h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
 
 <form class="form-list">
-    <dl class="fields">
-        <dt class="col-1">發佈日期</dt>
-        <dd class="col-3">
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 發佈日期</dt>
+        <dd class="col-4">
             <input type="date" required>
         </dd>
     </dl>
-    <dl class="fields">
-        <dt class="col-1">標題</dt>
-        <dd class="col-9">
+    <dl class="field">
+        <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+        <dd class="col-10">
             <input type="text">
         </dd>
     </dl>
-    <dl class="fields">
-        <dt class="col-1">排序</dt>
+    <dl class="field">
+        <dt class="col-2">列表圖</dt>
+        <dd class="col-4">
+            <div class="input-file">
+                <input type="file" accept="image/*">
+                <button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>
+            </div>
+
+            @* 已上傳範例 *@
+            <div class="uploaded">
+                <button class="hover-danger" type="button" title="刪除此筆檔案">&#215;</button>
+                <a href="圖片連結網址" target="new"><img src="" alt="小圖"></a>
+            </div>
+        </dd>
+        <dd class="col-5"><small class="align-middle font-sm text-secondary">可上傳 1 張圖片，建議尺寸 400*300px，每張圖最大不超過 200kb</small></dd>
+    </dl>
+    <dl class="field">
+        <dt class="col-2">排序</dt>
         <dd class="col-5">
             <input type="number" value="0" class="inline">
             <small>數字愈大愈前面</small>
         </dd>
     </dl>
-    <dl class="fields">
-        <dt class="col-1">前台顯示</dt>
+    <dl class="field">
+        <dt class="col-2">前台顯示</dt>
         <dd class="col-5">
             <label class="switch">
                 <input type="checkbox" checked>
@@ -42,8 +58,8 @@
             </label>
         </dd>
     </dl>
-    <dl class="fields">
-        <dt class="col-1">首頁顯示</dt>
+    <dl class="field">
+        <dt class="col-2">首頁顯示</dt>
         <dd class="col-5">
             <label class="switch">
                 <input type="checkbox">
@@ -51,18 +67,18 @@
             </label>
         </dd>
     </dl>
-    <fieldset class="m-t-24">
+    <fieldset class="mt-24">
         <legend class="underline">[ 內容 ]</legend>
-        <div class="alert-warning m-b-16">
+        <div class="alert-warning mb-16">
             <strong>編輯器注意事項:</strong><br>
             從 WORD 複製文字時，請使用下方的 <img src="/Content/images/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版<br/>
             編輯器上傳圖片或新增表格等時，請勿設定寬度及高度(將數字刪除) ，以免行動裝置顯示時會跑版。<br/>
             檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明) <br/>
             youtube 可勾選「用自適應縮放模式」
         </div>
-        <textarea rows="12"></textarea>
+        <textarea rows="15"></textarea>
     </fieldset>
-    <footer class="submit-bar clear m-t-24">
+    <footer class="submit-bar clear mt-24">
         <button type="button" class="btn success oi" data-glyph="circle-check">
             確認儲存
         </button>

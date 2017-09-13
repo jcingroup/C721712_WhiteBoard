@@ -2,27 +2,27 @@
 
 namespace OutWeb.Controllers
 {
-    public class ActivityController : Controller
+    public class WorksController : Controller
     {
-        public ActivityController()
+        public WorksController()
         {
             ViewBag.IsFirstPage = false;
         }
 
         public ActionResult Index()
         {
-            return View("Album");
+            return View("List");
         }
 
-        // 套程式-活動剪影
-        // 相簿
-        public ActionResult Album()
+        // 套程式-案例分享
+        // 列表頁
+        public ActionResult List()
         {
             return View();
         }
 
-        // 圖片列表
-        public ActionResult Photo()
+        // 內容頁
+        public ActionResult Content()
         {
             return View();
         }

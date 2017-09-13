@@ -1,8 +1,8 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_MLayout.cshtml";
-    ViewBag.Crumb = "消息報報管理";
-    ViewBag.subnav = "News";
+    ViewBag.Crumb = "案例分享管理";
+    ViewBag.subnav = "Works";
 }
 
 @section Breadcrumb {
@@ -14,24 +14,17 @@
 <h3 class="title">@ViewBag.Crumb</h3>
 
 <div class="alert-warning mb-16">
-    <strong>前台排序：</strong> 數字愈大愈前面。<br>
-    <strong>首頁顯示：</strong> 最多顯示3則消息。
+    <strong>前台排序：</strong> 數字愈大愈前面。
 </div>
 
-<div class="btn-group mb-8">
-    <button class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("NewsData")'">新增</button>
+<div class="topBtn-bar btn-group">
+    <button class="btn success oi" data-glyph="plus" onclick="location.href='@Url.Content("WorksData")'">新增</button>
 </div>
 
 <header class="table-head form-inline">
     <label>發佈日期</label>
     <input type="date">
     <label>前台顯示</label>
-    <select>
-        <option>全部</option>
-        <option>顯示</option>
-        <option>隱藏</option>
-    </select>
-    <label>首頁顯示</label>
     <select>
         <option>全部</option>
         <option>顯示</option>
@@ -65,9 +58,6 @@
             <button class="th-sort-toggle">前台顯示</button>
         </th>
         <th>
-            <button class="th-sort-toggle">首頁顯示</button>
-        </th>
-        <th>
             <button class="th-sort-toggle">前台排序</button>
         </th>
     </tr>
@@ -76,15 +66,13 @@
             <button class="hover-danger oi" title="刪除" data-glyph="trash"></button>
         </td>
         <td>
-            <button class="hover-primary oi" title="修改" data-glyph="pencil" onclick="location.href='@Url.Content("NewsData")'"></button>
+            <button class="hover-primary oi" title="修改" data-glyph="pencil" onclick="location.href='@Url.Content("WorksData")'"></button>
         </td>
         <td>2017-03-27</td>
         <td class="text-left">TEXT</td>
         <td>
             <span class="label-success">顯示</span>
-        </td>
-        <td>
-            <span class="label">隱藏</span>
+            @* <span class="label">隱藏</span> *@
         </td>
         <td>10</td>
     </tr>

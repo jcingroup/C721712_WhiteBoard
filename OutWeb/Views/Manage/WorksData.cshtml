@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MLayout.cshtml";
+    ViewBag.Crumb = "案例分享管理";
+    ViewBag.subnav = "Works";
+}
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>@ViewBag.Crumb</li>
+    </ul>
+}
+
+<h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
+
+<form class="form-list">
+    <section class="row row-x0">
+        <div class="col-6">
+            <dl class="field">
+                <dt class="col-2"><sup title="必填">*</sup> 發佈日期</dt>
+                <dd class="col-10">
+                    <input type="date" required>
+                </dd>
+            </dl>
+            <dl class="field">
+                <dt class="col-2"><sup title="必填">*</sup> 標題</dt>
+                <dd class="col-10">
+                    <input type="text">
+                </dd>
+            </dl>
+            <dl class="field">
+                <dt class="col-2">排序</dt>
+                <dd class="col-10">
+                    <input type="number" value="0" class="inline">
+                    <small>數字愈大愈前面</small>
+                </dd>
+            </dl>
+            <dl class="field">
+                <dt class="col-2">前台顯示</dt>
+                <dd class="col-10">
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <div class="slider round"></div>
+                    </label>
+                </dd>
+            </dl>
+        </div>
+        <div class="col-6">
+            <dl class="field">
+                <dt class="col-2">列表圖</dt>
+                <dd class="col-10">
+                    <div class="input-file">
+                        <input type="file" accept="image/*">
+                        <button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>
+                    </div>
+                    <small class="block text-secondary">可上傳 1 張圖片，建議尺寸 400*300px，每張圖最大不超過 200kb</small>
+
+                    @* 已上傳範例 *@
+                    <div class="uploaded">
+                        <button class="hover-danger" type="button" title="刪除此筆檔案">&#215;</button>
+                        <a href="圖片連結網址" target="new"><img src="" alt="小圖"></a>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="field">
+                <dt class="col-2">內頁圖</dt>
+                <dd class="col-10">
+                    <div class="input-file">
+                        <input type="file" accept="image/*" multiple>
+                        <button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>
+                    </div>
+                    <small class="block text-secondary">可上傳多張圖片，建議尺寸寬度不超過 1000px，每張圖最大不超過 500kb</small>
+
+                    @* 已上傳範例 *@
+                    <div class="uploaded">
+                        <button class="hover-danger" type="button" title="刪除此筆檔案">&#215;</button>
+                        <a href="圖片連結網址" target="new"><img src="" alt="小圖"></a>
+                    </div>
+                    <div class="uploaded">
+                        <button class="hover-danger" type="button" title="刪除此筆檔案">&#215;</button>
+                        <a href="圖片連結網址" target="new"><img src="" alt="小圖"></a>
+                    </div>
+                    <div class="uploaded">
+                        <button class="hover-danger" type="button" title="刪除此筆檔案">&#215;</button>
+                        <a href="圖片連結網址" target="new"><img src="" alt="小圖"></a>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </section>
+    <fieldset class="mt-24">
+        <legend class="underline">[ 更多內容介紹 ]</legend>
+        <div class="alert-warning mb-16">
+            <strong>編輯器注意事項:</strong><br>
+            從 WORD 複製文字時，請使用下方的 <img src="/Content/images/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版<br/>
+            編輯器上傳圖片或新增表格等時，請勿設定寬度及高度(將數字刪除) ，以免行動裝置顯示時會跑版。<br/>
+            檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明) <br/>
+            youtube 可勾選「用自適應縮放模式」
+        </div>
+        <textarea rows="15"></textarea>
+    </fieldset>
+    <footer class="submit-bar clear mt-24">
+        <button type="button" class="btn success oi" data-glyph="circle-check">
+            確認儲存
+        </button>
+        <button type="button" class="btn warning oi" data-glyph="circle-x" onclick="location.href='WorksList'">
+            回列表
+        </button>
+    </footer>
+</form>

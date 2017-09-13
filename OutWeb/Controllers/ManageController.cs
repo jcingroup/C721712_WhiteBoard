@@ -158,7 +158,23 @@ namespace OutWeb.Controllers
             return Redirect(Url.Content("~/Manage"));
         }
 
-        // 最新消息
+        // 產品管理
+        // 分類
+        public ActionResult ProductKind()
+        {
+            return View();
+        }
+        // 產品資料
+        public ActionResult ProductList()
+        {
+            return View();
+        }
+        public ActionResult ProductData()
+        {
+            return View();
+        }
+
+        // 最新消息=消息報報
         public ActionResult NewsList()
         {
             return View();
@@ -168,12 +184,18 @@ namespace OutWeb.Controllers
             return View();
         }
 
-        // 活動剪影        
-        public ActionResult ActivityList()
+        // 案例分享
+        public ActionResult WorksList()
         {
             return View();
         }
-        public ActionResult ActivityData()
+        public ActionResult WorksData()
+        {
+            return View();
+        }
+
+        // 代理商
+        public ActionResult Agents()
         {
             return View();
         }
