@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed">
     <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
     <link rel="stylesheet" href="~/Content/css/grid.css">
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
     @if (ViewBag.IsFirstPage)
     {
         <link rel="stylesheet" href="~/Content/css/login.css">
@@ -19,6 +22,12 @@
     {
         <link rel="stylesheet" href="~/Content/css/admin.css">
     }
+    @Scripts.Render("~/bundles/js")
+
+
+    @RenderSection("IncludeCSS", false)
+
+
     @RenderSection("css", false)
 </head>
 
@@ -36,11 +45,10 @@
                     <a href="~/Home" class="nav-link oi home" data-glyph="home">
                         回首頁
                     </a>
-
-                    <a href="~/Manage/Login" class="nav-link oi logout" data-glyph="power-standby">
-                        登出
-                    </a>
-                </nav>
+                        <a href="~/_SysAdm/LogOut" class="nav-link oi logout" data-glyph="power-standby">
+                            登出
+                        </a>
+</nav>
             </header><!-- header //-->
         }
 
@@ -62,19 +70,19 @@
 
                     <header class='collapse-toggle oi @(ViewBag.subnav == "Products" ? "active" : "")' data-glyph="beaker">產品管理</header>
                     <nav class='collapse-content @(ViewBag.subnav == "Products" ? "in" : "")'>
-                        <a href="~/Manage/ProductKind" class='@(ViewBag.subnav2 == "ProductKind" ? "active" : "")'>分類維護</a>
-                        <a href="~/Manage/ProductList" class='@(ViewBag.subnav2 == "Product" ? "active" : "")'>產品資料維護</a>
+                        <a href="~/_SysAdm/ProductKindList" class='@(ViewBag.subnav2 == "ProductKind" ? "active" : "")'>分類維護</a>
+                        <a href="~/_SysAdm/ProductList" class='@(ViewBag.subnav2 == "Product" ? "active" : "")'>產品資料維護</a>
                     </nav>
 
-                    <a href="~/Manage/NewsList" class='collapse-toggle oi @(ViewBag.subnav == "News" ? "active" : "")' data-glyph="bell">消息報報管理</a>
+                    <a href="~/_SysAdm/NewsList" class='collapse-toggle oi @(ViewBag.subnav == "News" ? "active" : "")' data-glyph="bell">消息報報管理</a>
 
-                    <a href="~/Manage/WorksList" class='collapse-toggle oi @(ViewBag.subnav == "Works" ? "active" : "")' data-glyph="flag">案例分享管理</a>
+                    <a href="~/_SysAdm/WorksList" class='collapse-toggle oi @(ViewBag.subnav == "Works" ? "active" : "")' data-glyph="flag">案例分享管理</a>
 
-                    <a href="~/Manage/Agents" class='collapse-toggle oi @(ViewBag.subnav == "Agents" ? "active" : "")' data-glyph="clipboard">代理商管理</a>
+                    <a href="~/_SysAdm/Agents" class='collapse-toggle oi @(ViewBag.subnav == "Agents" ? "active" : "")' data-glyph="clipboard">代理商管理</a>
 
                     <header class='collapse-toggle oi @(ViewBag.subnav == "Cog" ? "active" : "")' data-glyph="cog">系統設定</header>
                     <nav class='collapse-content @(ViewBag.subnav == "Cog" ? "in" : "")'>
-                        <a href="~/Manage/ChangePW" class='@(ViewBag.subnav2 == "ChangPW" ? "active" : "")'>變更密碼</a>
+                        <a href="~/_SysAdm/ChangePW" class='@(ViewBag.subnav2 == "ChangPW" ? "active" : "")'>變更密碼</a>
                     </nav>
                 </aside><!-- sidebar //-->
             }
@@ -107,7 +115,7 @@
             });
         </script>
     }
-
+    @RenderSection("IncludeScript", false)
     @RenderSection("scripts", false)
 </body>
 </html>

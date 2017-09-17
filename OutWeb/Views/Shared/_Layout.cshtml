@@ -17,6 +17,7 @@ else
 {
     <link rel="stylesheet" href="~/Content/css/page.css">
 }
+    @RenderSection("IncludeCSS", false)
     @RenderSection("css", false)
 </head>
 <body class="@ViewBag.BodyClass">
@@ -106,6 +107,7 @@ else
     </script>
 
     @RenderSection("scripts", required: false)
+    @RenderSection("IncludeScript", false)
 
 </body>
 </html>

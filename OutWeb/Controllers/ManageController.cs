@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OutWeb.Service;
-using Lib.Service;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 /*Json.NET相關的命名空間*/
 using Newtonsoft.Json;
-
+using OutWeb.Modules.Manage;
 
 namespace OutWeb.Controllers
 {

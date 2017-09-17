@@ -1,0 +1,177 @@
+﻿@*@using OutWeb.Models.Manage.ImgModels
+@model ImagesModel
+    @{ 
+        string currentUrl = "http://" + HttpContext.Current.Request.Url.Authority;
+        string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+    }
+<div id="images-div">
+    <div class="input-file">
+        <input id="images" type="file" onchange="createFlag(this);" name="images" accept="image/*">
+        <button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>
+    </div>
+
+
+    <div class="uploaded">
+        <button class="hover-danger" type="button" title="刪除此筆檔案">&#215;</button>
+        <a href="圖片連結網址" target="new"><img src="" alt="小圖"></a>
+    </div>
+</div>
+<script>
+    (function ($) {
+        $(function () {
+            //上傳
+            $('.uploadBtn').click(function () {
+                uploadPhoto(this);
+            });
+            //刪除
+            $(document).on('click', '.close', function () {
+                $(this).closest('li').remove();
+                //rename attribute
+                $(".imgitem").each(function (i, elem) {
+                    var $link = $(elem).find("input");
+                    $link.each(function (x, el) {
+                        var beforeName = $(el).attr('name');
+                        var chartIndex = beforeName.indexOf('[') + 1;
+                        var newName = beforeName.substr(0, chartIndex) +
+                            i + beforeName.substr(chartIndex + 1, beforeName.length - chartIndex);
+                        $(el).attr('name', newName);
+                    });
+                });
+
+                var imgID = $(this).attr('img-id');
+                var url = "@Url.Content("~/ImgHandler/DeleteImg/")";
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: url,
+                    data: { imgID: imgID },
+                    success: function (response) {
+                        if (response.messages != 'success') {
+                            alert(response.Message);
+                        }
+                    },
+                    error: function (error) {
+                        alert(error.Message);
+                    }
+                });
+            });
+
+
+            if ('@Model.Status' == '') {
+                $('#state_0').prop('checked', 'checked');
+            }
+            else {
+                var $radio = $('.c-choice');
+                $radio.each(function (i, elem) {
+                    if ($(elem).val() == '@Model.Status') {
+                        $(elem).prop('checked', 'checked');
+                        return;
+                    }
+                })
+            }
+        })
+    })(jQuery);
+    //上傳照片
+    function uploadPhoto(elem) {
+        var fileLimitSize = 2097152;//檔案大小2mb
+        var bannerID = $('#bannerID').val();
+        var totalFiles;
+        var formData = new FormData();
+        $('#hasPreviewFlag').val(false);
+        totalFiles = document.getElementById("images_B");
+        var imgCount = $('.imgitem_B').length;
+        if (imgCount + totalFiles.files.length > 1) {
+            alert('Banner 圖不可超過1張!');
+            return;
+        }
+
+        if (totalFiles.files.length == 0) {
+            alert('請選擇檔案!');
+            return;
+        }
+
+        //檢查格式尺寸
+        var sizePass = checkFileLimitSize(totalFiles, fileLimitSize);
+        var typePass = checkFileExtension(totalFiles);
+
+        if (!sizePass || !typePass) {
+            return;
+        }
+
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var file = totalFiles.files[i];
+            formData.append("images", file);
+        }
+
+        var urlPath = '@currentUrl';
+        formData.append("act", 'upload');
+        formData.append("actionName", '@ActionName');
+        formData.append("ID", bannerID);
+        var url = "@Url.Content("~/ImgHandler/Index/")";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url,
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                var imgUrl = '@currentUrl' + '/';
+                if (response.redirectToActionUrl != null) {
+                    window.location.href = response.redirectToActionUrl;
+                }
+                $('#bannerImg li').remove();
+
+                for (var i = 0; i < response.MemberData.length; i++) {
+                    var img = response.MemberData[i];
+                    var $elemInsert =
+                    '<li class="imgitem_B">' +
+                        '<button class="close" type="button" img-id="' + img.ID + '">&times;</button>' +
+                        '<img src="' + imgUrl + img.FileUrl + '" width="100" />' +
+                        '<input type="hidden" id="imgID" name="MemberData[' + i + '].ID" value="' + img.ID + '" />' +
+                        '<input type="hidden" id="imgName" name="MemberData[' + i + '].FileName" value="' + img.FileName + '" />' +
+                        '<input type="hidden" id="imgUrl" name="MemberData[' + i + '].FileUrl" value="' + imgUrl + img.FileUrl + '" />' +
+                    '</li>';
+                    $('#bannerImg').append($elemInsert);
+                }
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    }
+    //檢查尺寸
+    function checkFileLimitSize(totalFiles, fileLimitSize) {
+        var success = true;
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var file = totalFiles.files[i];
+            if (file.size > fileLimitSize) {
+                success = false;
+                alert("圖片大小不可超過2mb.");
+                break;
+            }
+        }
+        return success;
+    }
+    //檢查副檔名
+    function checkFileExtension(totalFiles) {
+        var success = true;
+        var allowedExtension = ["image/bmp", "image/gif", "image/jpeg", "image/jpg", "image/png"];
+        for (var i = 0; i < totalFiles.files.length; i++) {
+            var fileExtension = totalFiles.files[i].type;
+            var findIndex = $.inArray(fileExtension, allowedExtension);
+            if (findIndex < 0) {
+                success = false;
+                alert("只允許上傳 bmp, gif, jpeg, jpg, png圖檔.");
+                break;
+            }
+        }
+        return success;
+    }
+    function createFlag(elem) {
+        var mode = $(elem).attr('action-mode');
+        $('#hdnActionMode').val(mode);
+        $('#hasPreviewFlag').val(true);
+    }
+</script>*@

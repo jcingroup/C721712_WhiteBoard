@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OutWeb.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,9 +13,12 @@ namespace OutWeb
     {
         protected void Application_Start()
         {
+            BundleTable.EnableOptimizations = false;
             AreaRegistration.RegisterAllAreas();
+            RouteTable.Routes.MapMvcAttributeRoutes();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }
