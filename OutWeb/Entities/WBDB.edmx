@@ -92,7 +92,7 @@
           <Property Name="SIGNIN_PWD" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="USR_NM" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="USR_ENM" Type="varchar" MaxLength="50" />
-          <Property Name="USR_EML" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USR_EML" Type="nvarchar" MaxLength="50" />
           <Property Name="USR_GUID" Type="char" MaxLength="36" Nullable="false" />
           <Property Name="SIGNIN_DTM" Type="datetime" Nullable="false" />
           <Property Name="BUD_USRID" Type="int" Nullable="false" />
@@ -207,7 +207,7 @@
           <Property Name="SIGNIN_PWD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USR_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USR_ENM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="USR_EML" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USR_EML" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USR_GUID" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="false" />
           <Property Name="SIGNIN_DTM" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="BUD_USRID" Type="Int32" Nullable="false" />
