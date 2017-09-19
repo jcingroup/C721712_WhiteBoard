@@ -12,7 +12,7 @@ html, body {
 
 body {
   background: #fff;
-  color: #1a1a1a;
+  color: #000;
   font: 16px/1.5 \5FAE\8EDF\6B63\9ED1\9AD4, "微軟正黑體", "Microsoft JhengHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: .01em; }
 
@@ -636,7 +636,7 @@ dd {
   border: 0; }
 
 .font-sp {
-  font-family: "Anton", sans-serif; }
+  font-family: "Open Sans", sans-serif; }
 
 .font-tiny {
   font-size: 13;
@@ -680,26 +680,26 @@ dd {
   background-color: #000; }
 
 .text-primary, .btn-toggle {
-  color: #293035; }
+  color: #000; }
 
 .bg-primary {
-  background-color: #293035; }
+  background-color: #000; }
 
 .hover-primary {
-  color: #293035; }
+  color: #000; }
   .hover-primary:hover, .hover-primary:active {
-    color: #08090a; }
+    color: black; }
 
 .text-secondary {
-  color: #F7BE21; }
+  color: #54575a; }
 
 .bg-secondary {
-  background-color: #F7BE21; }
+  background-color: #54575a; }
 
 .hover-secondary {
-  color: #F7BE21; }
+  color: #54575a; }
   .hover-secondary:hover, .hover-secondary:active {
-    color: #c49207; }
+    color: #2f3132; }
 
 .text-muted {
   color: #E3E3E4; }
@@ -813,7 +813,7 @@ dd {
     box-shadow: none; }
   .btn-toggle.active {
     box-shadow: none;
-    background-color: #F7BE21; }
+    background-color: #54575a; }
 
 .bg-teal {
   background-color: #29A867; }
