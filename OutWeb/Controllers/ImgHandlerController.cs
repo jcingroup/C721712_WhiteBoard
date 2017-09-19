@@ -49,9 +49,14 @@ namespace OutWeb.Controllers
         /// <returns></returns>
         [CheckFolder]
         [HttpPost]
-        public string Index(string act, ImagesModel vm, List<HttpPostedFileBase> images)
+        public string Index(string act, ImagesModel vm, List<HttpPostedFileBase> images, List<HttpPostedFileBase> imagesMultiple)
         {
-            this.UploadPhoto(act, vm, images);
+            this.UploadPhoto(act, vm, images, "S");
+            this.UploadPhoto(act, vm, imagesMultiple, "M");
+            if (images == null)
+                vm.MemberData.Clear();
+            if (imagesMultiple == null)
+                vm.MemberDataMultiple.Clear();
             if (act == "post")
                 this.SaveImagesToDB(vm);
 
@@ -59,6 +64,7 @@ namespace OutWeb.Controllers
             return jsonStrModel;
         }
 
+   
         /// <summary>
         /// 寫Log查看表單post的結果
         /// </summary>
@@ -74,7 +80,7 @@ namespace OutWeb.Controllers
         /// </summary>
         /// <param name="vm"></param>
         /// <param name="myFile"></param>
-        private void UploadPhoto(string uploadType, ImagesModel vm, List<HttpPostedFileBase> images)
+        private void UploadPhoto(string uploadType, ImagesModel vm, List<HttpPostedFileBase> images, string mode)
         {
             string serverMapPath = string.Empty;
 
@@ -82,12 +88,19 @@ namespace OutWeb.Controllers
                 serverMapPath = "~/Content/Upload/Manage/Images/Temp/";
             else
                 serverMapPath = "~/Content/Upload/Manage/Images/";
-
-            foreach (var m in vm.MemberData)
-                m.FilePath = Server.MapPath(serverMapPath + m.FileName);
+            if (mode == "S")
+            {
+                foreach (var m in vm.MemberData)
+                    m.FilePath = Server.MapPath(serverMapPath + m.FileName);
+            }
+            else
+            {
+                foreach (var m in vm.MemberDataMultiple)
+                    m.FilePath = Server.MapPath(serverMapPath + m.FileName);
+            }
             int imgMaxWidth = 0;
             int imgMaxHeight = 0;
-            if (vm.ActionName.StartsWith("News"))
+            if (vm.ActionName.StartsWith("Product"))
             {
                 imgMaxWidth = 400;
                 imgMaxHeight = 300;
@@ -114,12 +127,24 @@ namespace OutWeb.Controllers
                     {
                         images[i].SaveAs(strFilePath);
                     }
-                    vm.MemberData.Add(new MemberViewModel()
+                    if (mode == "S")
                     {
-                        FilePath = strFilePath,
-                        FileName = strFileName,
-                        FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName,
-                    });
+                        vm.MemberData.Add(new MemberViewModel()
+                        {
+                            FilePath = strFilePath,
+                            FileName = strFileName,
+                            FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName,
+                        });
+                    }
+                    else if (mode == "M")
+                    {
+                        vm.MemberDataMultiple.Add(new MemberViewModel()
+                        {
+                            FilePath = strFilePath,
+                            FileName = strFileName,
+                            FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName,
+                        });
+                    }
                 }
             }
         }

@@ -21,6 +21,10 @@ namespace OutWeb.Models.Manage.ImgModels
 
         private List<MemberViewModel> m_memberData = new List<MemberViewModel>();
         public List<MemberViewModel> MemberData { get { return m_memberData; } set { this.m_memberData = value; } }
+
+        private List<MemberViewModel> m_memberDataMultiple= new List<MemberViewModel>();
+        public List<MemberViewModel> MemberDataMultiple { get { return m_memberDataMultiple; } set { this.m_memberDataMultiple = value; } }
+
     }
 
     public class MemberViewModel

@@ -67,7 +67,7 @@
             <dt class="col-2">列表圖</dt>
             <dd class="col-10 append-img-s">
                 <div class="input-file">
-                    <input id="images_s" type="file" onchange="uploadImg(this);" name="images" accept="image/*" upload-mode="upload">
+                    <input id="images_s" type="file" onchange="postImages(this);" name="images" accept="image/*" upload-mode="upload">
                     @*<button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>*@
                 </div>
                 <small class="block text-secondary">可上傳 1 張圖片，建議尺寸 400*300px，每張圖最大不超過 200kb</small>
@@ -89,7 +89,7 @@
             <dt class="col-2">內頁圖</dt>
             <dd class="col-10 append-img-m">
                 <div class="input-file">
-                    <input id="images_m" type="file" onchange="uploadImg(this);" name="images" accept="image/*" upload-mode="upload" multiple>
+                    <input id="images_m" type="file" onchange="postImages(this);" name="images" accept="image/*" upload-mode="upload" multiple>
                     @*<button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>*@
                 </div>
                 <small class="block text-secondary">可上傳多張圖片，建議尺寸寬度不超過 1000px，每張圖最大不超過 500kb</small>
@@ -165,12 +165,16 @@
         $(function () {
             //刪除
             $(document).on('click', '.close', function () {
+    
                 var mode = $(this).attr('del-obj');
                 $(this).closest('.uploaded').remove();
                 if (mode == 's') {
                     $('#images_s').val('');
                 }
                 else if (mode == 'm') {
+                    var f = document.getElementById('images_m');
+                 var   fileCount = f.files.length;
+                 $('#images_m').prev().text(fileCount + 'Selected');
                     //rename attribute
                     $(".up-multiple").each(function (i, elem) {
                         var $link = $(elem).find("input");
@@ -183,30 +187,203 @@
                         });
                     });
                 }
+            });
 
-
-                @*var imgID = $(this).attr('img-id');
-                var url = "@Url.Content("~/ImgHandler/DeleteImg/")";
-                $.ajax({
-                    async: false,
-                    type: "POST",
-                    url: url,
-                    data: { imgID: imgID },
-                    success: function (response) {
-                        if (response.messages != 'success') {
-                            alert(response.Message);
-                        }
-                    },
-                    error: function (error) {
-                        alert(error.Message);
-                    }
-                });*@
-
+            $('#formManageProductData').submit(function () {
+                var imgUpIsSuccess = saveImages();
+                if (!imgUpIsSuccess) {
+                    return false;
+                }
             });
         })
     })(jQuery);
 
-    //上傳照片
+    function saveImages() {
+        if (typeof window._formData !== 'undefined') {
+            var sImg = window._formData.get('images');
+            var mImg = window._formData.get('imagesMultiple');
+  
+
+            if (sImg == null || mImg == null) {
+                alert('請上傳圖片');
+                return false;
+            }
+        }
+        else {
+            alert('請上傳圖片');
+            return false;
+        }
+        window._formData.set("act", 'post');
+
+        var url = "@Url.Content("~/ImgHandler/Index/")";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url,
+            data: window._formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    }
+
+    function postImages(elem) {
+        window._formData = new FormData();
+        var mode = $(elem).attr('id');
+        var uploadMode = $(elem).attr('upload-mode');
+        var fileLimitSize = 2097152;//檔案大小2mb
+        var ID = $('#hdnProductID').val();
+        var totalFiles_s = document.getElementById('images_s');
+        var totalFiles_m = document.getElementById('images_m');
+
+        if (mode == 'images_s') {
+            if (typeof window._formData !== 'undefined') {
+                var sImg = window._formData.get('images');
+                if (sImg != null)
+                {
+                    window._formData.delete('images');
+                }
+            }
+            //var imgCount = $('.up-single').length;
+            //if (imgCount + totalFiles_s.files.length > 1) {
+            //    console.log(imgCount + totalFiles_s.files.length);
+            //alert('圖不可超過1張!');
+            $('.up-single').remove();
+            //$('#images_s').val('');
+            //    return;
+            //}
+            if (imgCount + totalFiles_s.files.length == 0) {
+                alert('請選擇檔案!');
+                return;
+            }
+            //檢查格式尺寸
+            var sizePass = checkFileLimitSize(totalFiles_s, fileLimitSize);
+            var typePass = checkFileExtension(totalFiles_s);
+            if (!sizePass || !typePass) {
+                return;
+            }
+            for (var i = 0; i < totalFiles_s.files.length; i++) {
+                var file = totalFiles_s.files[i];
+                window._formData.append("images", file);
+            }
+        }
+
+        if (mode == 'images_m') {
+            var imgCount = $('.up-multiple').length;
+            //if (imgCount + totalFiles_m.files.length > 5) {
+            //    alert('其他圖不可超過5張!');
+            //    $('.up-multiple').remove();
+            //    $('#images_m').val('');
+            //    return;
+            //}
+            if (imgCount + totalFiles_m.files.length == 0) {
+                alert('請選擇檔案!');
+                return;
+            }
+            //檢查格式尺寸
+            var sizePass = checkFileLimitSize(totalFiles_m, fileLimitSize);
+            var typePass = checkFileExtension(totalFiles_m);
+            if (!sizePass || !typePass) {
+                return;
+            }
+            for (var i = 0; i < totalFiles_m.files.length; i++) {
+                var file = totalFiles_m.files[i];
+                window._formData.append("imagesMultiple", file);
+            }
+        }
+
+
+        var urlPath = '@currentUrl';
+        if (mode == 'images_m') {
+            $(".up-multiple").each(function (i, elem) {
+                var $link = $(elem).find("input");
+                $link.each(function (x, el) {
+                    var val = $(el).val();
+                    var beforeName = $(el).attr('name');
+                    var chartIndex = beforeName.indexOf('[') + 1;
+                    var newName = beforeName.substr(0, chartIndex) +
+                        i + beforeName.substr(chartIndex + 1, beforeName.length - chartIndex);
+                    $(el).attr('name', newName);
+                    if (newName == 'MemberData[' + i + '].FileUrl') {
+                        var nVal = val.replace(urlPath + '/', '');
+                    }
+                    else {
+                        nVal = val;
+                    }
+                    window._formData.append(newName, nVal);
+                });
+            });
+        };
+
+        window._formData.append("act", uploadMode);
+        window._formData.append("UploadType", mode);
+        window._formData.append("actionName", '@ActionName');
+        window._formData.append("ID", ID);
+        var sImg = window._formData.get('images');
+        var mImg = window._formData.get('imagesMultiple');
+ 
+        var url = "@Url.Content("~/ImgHandler/Index/")";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url,
+            data: window._formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                var imgUrl = '@currentUrl' + '/';
+                if (response.redirectToActionUrl != null) {
+                    window.location.href = response.redirectToActionUrl;
+                }
+
+                if (response.MemberData.length > 0) {
+                    $('.up-single').remove();
+                }
+                if (response.MemberDataMultiple.length > 0) {
+                    $('.up-multiple').remove();
+                }
+
+
+                for (var i = 0; i < response.MemberData.length; i++) {
+                    var img = response.MemberData[i];
+                    var $elemInsert =
+                    '<div class="uploaded up-single">' +
+                        '<button class="close" type="button" img-id="' + img.ID + '" del-obj="s" ">&times;</button>' +
+                        '<img src="' + imgUrl + img.FileUrl + '" width="100" />' +
+                        '<input type="hidden" id="imgID" name="MemberData[' + i + '].ID" value="' + img.ID + '" />' +
+                        '<input type="hidden" id="imgName" name="MemberData[' + i + '].FileName" value="' + img.FileName + '" />' +
+                        '<input type="hidden" id="imgUrl" name="MemberData[' + i + '].FileUrl" value="' + imgUrl + img.FileUrl + '" />' +
+                    '</div>';
+                    $('.append-img-s').append($elemInsert);
+                }
+                for (var i = 0; i < response.MemberDataMultiple.length; i++) {
+                    var img = response.MemberDataMultiple[i];
+                    var $elemInsert =
+                    '<div class="uploaded up-multiple">' +
+                        '<button class="close" type="button" img-id="' + img.ID + '" del-obj="m" ">&times;</button>' +
+                        '<img src="' + imgUrl + img.FileUrl + '" width="100" />' +
+                        '<input type="hidden" id="imgID" name="MemberData[' + i + '].ID" value="' + img.ID + '" />' +
+                        '<input type="hidden" id="imgName" name="MemberData[' + i + '].FileName" value="' + img.FileName + '" />' +
+                        '<input type="hidden" id="imgUrl" name="MemberData[' + i + '].FileUrl" value="' + imgUrl + img.FileUrl + '" />' +
+                    '</div>';
+                    $('.append-img-m').append($elemInsert);
+                }
+
+
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    }
+    //上傳照片 預覽
     function uploadImg(elem) {
         var mode = $(elem).attr('id');
         var uploadMode = $(elem).attr('upload-mode');
@@ -297,7 +474,7 @@
                 for (var i = 0; i < response.MemberData.length; i++) {
                     var img = response.MemberData[i];
                     var $elemInsert =
-                    '<div class="uploaded ' + insertClass + '">' +
+                    '<div class="uploaded up-single' + insertClass + '">' +
                         '<button class="close" type="button" img-id="' + img.ID + '" del-obj="' + delObj + '">&times;</button>' +
                         '<img src="' + imgUrl + img.FileUrl + '" width="100" />' +
                         '<input type="hidden" id="imgID" name="MemberData[' + i + '].ID" value="' + img.ID + '" />' +
@@ -342,9 +519,5 @@
         }
         return success;
     }
-    //function createFlag(elem) {
-    //    var mode = $(elem).attr('action-mode');
-    //    $('#hdnActionMode').val(mode);
-    //    $('#hasPreviewFlag').val(true);
-    //}
+
 </script>
