@@ -9,9 +9,14 @@ namespace OutWeb.Controllers
     public class AgentsController : Controller
     {
         // GET: Agents
+        public AgentsController()
+        {
+            ViewBag.IsFirstPage = false;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            return View("Agents");
         }
 
         // 套程式-代理商

@@ -1,37 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "最新消息";
+    ViewBag.Title = "消息報報";
     ViewBag.BodyClass = "News";
-    ViewBag.subnav = "News";
 }
 
-<header class="bg-pattern p-y-48">
-    <h1 class="title">@ViewBag.Title</h1>
-    @*@Html.Partial("subnav")*@
-</header>
-
-<main class="wrap text-left py-64">
-    <ul class="news-list">
-        @* 套程式 *@
-        <li class="cell-row">
-            <small class="cell">2017-06-06</small>
-            <a href="~/News/Content" class="cell">寶程之光/淡水蔚城社區榮獲2017年優良公寓大廈獎</a>
-        </li>
-        <li class="cell-row">
-            <small class="cell">2017-06-01</small>
-            <a href="~/News/Content" class="cell">恭賀本公司獲得經濟部中小企業最佳品質服務獎</a>
-        </li>
-        <li class="cell-row">
-            <small class="cell">2017-05-15</small>
-            <a href="~/News/Content" class="cell">寶程國際物業將進駐帝寶社區管理服務</a>
-        </li>
-        <li class="cell-row">
-            <small class="cell">2017-05-08</small>
-            <a href="~/News/Content" class="cell">寶程國際物業提供社區各種表單免費下載</a>
-        </li>
-        <li class="cell-row">
-            <small class="cell">2017-05-03</small>
-            <a href="~/News/Content" class="cell">寶程國際物業董事長獲得總統府優良企業經營獎</a>
-        </li>
-    </ul>
-</main>
+<h1 class="title"><span class="underline">@ViewBag.Title</span></h1>

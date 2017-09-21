@@ -166,6 +166,7 @@
     <Compile Include="Controllers\ImgHandlerController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\WorksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1484,8 +1485,14 @@
     <Content Include="Content\css\vendor\swiper.min.css" />
     <Content Include="Content\css\vendor\typeahead.css" />
     <Content Include="Content\font\open-iconic\open-iconic.svg" />
+    <Content Include="Content\images\banner.jpg" />
     <Content Include="Content\images\index\banner.jpg" />
+    <Content Include="Content\images\logo-s.gif" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\pic-temp.jpg" />
+    <Content Include="Content\images\pic-temp2.jpg" />
+    <Content Include="Content\images\pic-temp3.jpg" />
+    <Content Include="Content\images\piclistBg.gif" />
     <Content Include="Content\js\jquery.waypoints.min.js" />
     <Content Include="Content\js\lightbox.min.js" />
     <Content Include="Content\js\swiper.min.js" />
@@ -1554,6 +1561,9 @@
     <Content Include="Views\_SysAdm\_ProductKindDataPartia.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindAdd.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindEdit.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Products\List.cshtml" />
+    <Content Include="Views\Products\Content.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

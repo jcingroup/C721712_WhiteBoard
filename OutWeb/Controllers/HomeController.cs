@@ -21,5 +21,11 @@ namespace OutWeb.Controllers
         {
             return View();
         }
+
+        // 聯絡我們
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
     }
 }

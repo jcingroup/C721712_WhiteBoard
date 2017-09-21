@@ -514,7 +514,7 @@ output {
   display: block;
   margin: auto; }
 
-.mx-a, form, form .title, form main {
+.center, form, form .title, form main {
   margin-right: auto;
   margin-left: auto; }
 
