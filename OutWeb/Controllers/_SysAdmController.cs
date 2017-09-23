@@ -2,14 +2,20 @@
 using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Exceptions;
+using OutWeb.Models.Manage.AgentModels;
+using OutWeb.Models.Manage.ImgModels;
 using OutWeb.Models.Manage.ManageNewsModels;
 using OutWeb.Models.Manage.ProductKindModels;
 using OutWeb.Models.Manage.ProductModels;
+using OutWeb.Models.Manage.WorksModels;
 using OutWeb.Modules.Manage;
 using OutWeb.Repositories;
 using OutWeb.Service;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 
 namespace OutWeb.Controllers
@@ -99,6 +105,7 @@ namespace OutWeb.Controllers
         [HttpPost]
         public ActionResult ProductKindEdit(FormCollection form)
         {
+
             string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
             Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
             int? ID = Convert.ToInt32(form["ProductKindID"]);
@@ -168,17 +175,18 @@ namespace OutWeb.Controllers
 
         [ValidateInput(false)]
         [HttpPost]
-        public ActionResult ProductDataAdd(FormCollection form)
+        public ActionResult ProductDataAdd(FormCollection form, List<HttpPostedFileBase> image, List<HttpPostedFileBase> images)
         {
             string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
             Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
             ListModuleService module = ListFactoryService.Create(ListMethodType.PRODUCT);
-            int identityId = module.DoSaveData(form, language);
-            return RedirectToAction("ProductDataEdit", "_SysAdm", new { ID = identityId });
+            int identityId = module.DoSaveData(form, language, null, image, images);
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ProductDataEdit", "_SysAdm", new { ID = identityId });
+            return Json(new { Url = redirectUrl });
         }
 
         [HttpGet]
-        public ActionResult ProductDataEdit(int? ID)
+        public ActionResult ProductDataEdit(int? ID, bool error = false)
         {
             if (!ID.HasValue)
                 return RedirectToAction("ProductList");
@@ -188,38 +196,58 @@ namespace OutWeb.Controllers
                 return RedirectToAction("Login", "SignIn");
             //取圖檔
             ImgModule imgModule = new ImgModule();
-            model.ImagesData = imgModule.GetPreviewImg(model.ID, "Product", "R").FirstOrDefault();
-            model.OtherImagesData = imgModule.GetPreviewImg(model.ID, "Product", "O");
+            model.ImagesData = imgModule.GetImages(model.ID, "Product", "S").FirstOrDefault();
+            model.OtherImagesData = imgModule.GetImages(model.ID, "Product", "M");
             //產品分類下拉選單
             ProductKindModule typeModule = new ProductKindModule();
-            SelectList typeList = typeModule.CreateProductKindDropList(model.TypeID, false);
+            SelectList typeList = typeModule.CreateProductKindDropList(model.TypeID, false, model.DisplayForFrontEnd);
             ViewBag.TypeList = typeList;
+            if (error)
+                TempData["ERROR"] = "此分類已被停用，若要顯示前台請先將分類啟用";
             return View(model);
         }
 
         [ValidateInput(false)]
         [HttpPost]
-        public ActionResult ProductDataEdit(FormCollection form)
+        public ActionResult ProductDataEdit(FormCollection form, List<HttpPostedFileBase> image, List<HttpPostedFileBase> images)
         {
             string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
             Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
             int? ID = Convert.ToInt32(form["ProductID"]);
+            ProductKindModule typeModule = new ProductKindModule();
+
+            #region 判斷狀態是否已被停用 被停用 不得啟用前台顯示
+            if (ID.HasValue)
+            {
+                int chkTypeID = Convert.ToInt16(form["type"]);
+                ProductKindDetailsDataModel tModel = (typeModule.DoGetDetailsByID(chkTypeID) as ProductKindDetailsDataModel);
+                bool tpStatus = tModel.Status == "Y" ? true : false;
+                bool setStatus = form["fSt"] == null ? false : true;
+                if ((!tpStatus) && (setStatus))
+                {
+                    var redirectErrorUrl = new UrlHelper(Request.RequestContext).Action("ProductDataEdit", "_SysAdm", new { ID = ID, error = true });
+                    return Json(new { Url = redirectErrorUrl });
+                }
+            }
+
+            #endregion
             ListModuleService module = ListFactoryService.Create(ListMethodType.PRODUCT);
-            int identityId = module.DoSaveData(form, language, ID);
-            ProductDetailsDataModel model = (module.DoGetDetailsByID((int)ID) as ProductDetailsDataModel);
+            int identityId = module.DoSaveData(form, language, ID, image, images);
+            ProductDetailsDataModel model = (module.DoGetDetailsByID((int)identityId) as ProductDetailsDataModel);
             //取圖檔
             ImgModule imgModule = new ImgModule();
-            model.ImagesData = imgModule.GetPreviewImg(model.ID, "Product", "R").FirstOrDefault();
-            model.OtherImagesData = imgModule.GetPreviewImg(model.ID, "Product", "O");
+            model.ImagesData = imgModule.GetImages(model.ID, "Product", "S").FirstOrDefault();
+            model.OtherImagesData = imgModule.GetImages(model.ID, "Product", "M");
             //產品分類下拉選單
-            ProductKindModule typeModule = new ProductKindModule();
-            SelectList typeList = typeModule.CreateProductKindDropList(model.TypeID, false);
+            SelectList typeList = typeModule.CreateProductKindDropList(model.TypeID,false, model.DisplayForFrontEnd);
             ViewBag.TypeList = typeList;
-            return View(model);
+
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ProductDataEdit", "_SysAdm", new { ID = identityId });
+            return Json(new { Url = redirectUrl });
         }
 
         [HttpPost]
-        public JsonResult ProductDataEditDelete(int? ID)
+        public JsonResult ProductDataDelete(int? ID)
         {
             bool success = true;
             string messages = string.Empty;
@@ -266,13 +294,14 @@ namespace OutWeb.Controllers
 
         [ValidateInput(false)]
         [HttpPost]
-        public ActionResult NewsAdd(FormCollection form)
+        public ActionResult NewsAdd(FormCollection form, List<HttpPostedFileBase> image, List<HttpPostedFileBase> images)
         {
             string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
             Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
             ListModuleService module = ListFactoryService.Create(Enums.ListMethodType.NEWS);
-            int identityId = module.DoSaveData(form, language);
-            return RedirectToAction("NewsEdit", "_SysAdm", new { ID = identityId });
+            int identityId = module.DoSaveData(form, language, null, image, images);
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("NewsEdit", "_SysAdm", new { ID = identityId });
+            return Json(new { Url = redirectUrl });
         }
 
         [HttpGet]
@@ -284,20 +313,27 @@ namespace OutWeb.Controllers
             NewsDetailsDataModel model = (module.DoGetDetailsByID((int)ID) as NewsDetailsDataModel);
             if (model == null)
                 return RedirectToAction("Login", "SignIn");
+            //取圖檔
+            ImgModule imgModule = new ImgModule();
+            model.ImagesData = imgModule.GetImages(model.ID, "News", "S").FirstOrDefault();
             return View(model);
         }
 
         [ValidateInput(false)]
         [HttpPost]
-        public ActionResult NewsEdit(FormCollection form)
+        public ActionResult NewsEdit(FormCollection form, List<HttpPostedFileBase> image, List<HttpPostedFileBase> images)
         {
             string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
             Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
             int? ID = Convert.ToInt32(form["newsID"]);
             ListModuleService module = ListFactoryService.Create(Enums.ListMethodType.NEWS);
-            int identityId = module.DoSaveData(form, language, ID);
-            NewsDetailsDataModel model = (module.DoGetDetailsByID((int)ID) as NewsDetailsDataModel);
-            return View(model);
+            int identityId = module.DoSaveData(form, language, ID, image, images);
+            NewsDetailsDataModel model = (module.DoGetDetailsByID((int)identityId) as NewsDetailsDataModel);
+            //取圖檔
+            ImgModule imgModule = new ImgModule();
+            model.ImagesData = imgModule.GetImages(model.ID, "News", "S").FirstOrDefault();
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("NewsEdit", "_SysAdm", new { ID = identityId });
+            return Json(new { Url = redirectUrl });
         }
 
         [HttpPost]
@@ -324,40 +360,141 @@ namespace OutWeb.Controllers
 
         #region 案例分享
 
-        public ActionResult WorksList()
+        public ActionResult WorksList(int? page, string qry, string sort, string pDate, string fSt, string lang)
         {
-            return View();
+            Language language = PublicMethodRepository.CurrentLanguageEnum;
+            WorksListViewModel model = new WorksListViewModel();
+            model.Filter.CurrentPage = page ?? 1;
+            model.Filter.QueryString = qry ?? string.Empty;
+            model.Filter.SortColumn = sort ?? string.Empty;
+            model.Filter.DisplayForFrontEnd = fSt ?? string.Empty;
+            model.Filter.PublishDate = pDate;
+            ListModuleService module = ListFactoryService.Create(Enums.ListMethodType.WORKS);
+            model.Result = (module.DoGetList(model.Filter, language) as WorksListResultModel);
+            return View(model);
         }
 
-        public ActionResult WorksData()
+        [HttpGet]
+        public ActionResult WorksDataAdd()
         {
-            return View();
+            return View(new WorksDetailsDataModel());
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult WorksDataAdd(FormCollection form, List<HttpPostedFileBase> image, List<HttpPostedFileBase> images)
+        {
+            string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
+            Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
+            ListModuleService module = ListFactoryService.Create(ListMethodType.WORKS);
+            int identityId = module.DoSaveData(form, language, null, image, images);
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("WorksDataEdit", "_SysAdm", new { ID = identityId });
+            return Json(new { Url = redirectUrl });
+        }
+
+        [HttpGet]
+        public ActionResult WorksDataEdit(int? ID)
+        {
+            if (!ID.HasValue)
+                return RedirectToAction("WorksList");
+            ListModuleService module = ListFactoryService.Create(ListMethodType.WORKS);
+            WorksDetailsDataModel model = (module.DoGetDetailsByID((int)ID) as WorksDetailsDataModel);
+            if (model == null)
+                return RedirectToAction("Login", "SignIn");
+            //取圖檔
+            ImgModule imgModule = new ImgModule();
+            model.ImagesData = imgModule.GetImages(model.ID, "Works", "S").FirstOrDefault();
+            model.OtherImagesData = imgModule.GetImages(model.ID, "Works", "M");
+            return View(model);
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult WorksDataEdit(FormCollection form, List<HttpPostedFileBase> image, List<HttpPostedFileBase> images)
+        {
+            string langCode = form["lang"] ?? PublicMethodRepository.CurrentLanguageCode;
+            Language language = PublicMethodRepository.GetLanguageEnumByCode(langCode);
+            int? ID = Convert.ToInt32(form["ProductID"]);
+            ListModuleService module = ListFactoryService.Create(ListMethodType.WORKS);
+            int identityId = module.DoSaveData(form, language, ID, image, images);
+            WorksDetailsDataModel model = (module.DoGetDetailsByID((int)identityId) as WorksDetailsDataModel);
+            //取圖檔
+            ImgModule imgModule = new ImgModule();
+            model.ImagesData = imgModule.GetImages(model.ID, "Works", "S").FirstOrDefault();
+            model.OtherImagesData = imgModule.GetImages(model.ID, "Works", "M");
+
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("WorksDataEdit", "_SysAdm", new { ID = identityId });
+            return Json(new { Url = redirectUrl });
+        }
+
+        [HttpPost]
+        public JsonResult WorksDataDelete(int? ID)
+        {
+            bool success = true;
+            string messages = string.Empty;
+            try
+            {
+                ListModuleService module = ListFactoryService.Create(ListMethodType.WORKS);
+                module.DoDeleteByID((int)ID);
+                messages = "刪除成功";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                messages = ex.Message;
+            }
+            var resultJson = Json(new { success = success, messages = messages });
+            return resultJson;
         }
 
         #endregion 案例分享
 
         #region 代理商
-
+        [HttpGet]
         public ActionResult Agents()
         {
-            return View();
+            ListModuleService module = ListFactoryService.Create(ListMethodType.AGENT);
+            AgentDataModel model = (module.DoGetList<object>(null, Language.NotSet) as AgentDataModel);
+            return View(model);
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult Agents(FormCollection form)
+        {
+            ListModuleService module = ListFactoryService.Create(ListMethodType.AGENT);
+            module.DoSaveData(form, Language.NotSet, null, null, null);
+            AgentDataModel model = (module.DoGetList<object>(null, Language.NotSet) as AgentDataModel);
+            return View(model);
         }
 
         #endregion 代理商
 
+
         #region 修改密碼
 
+        /// 管理員密碼變更
+        [HttpGet]
         public ActionResult ChangePW()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ChangePW(string now_pwd, string new_pwd, string chk_new_pwd)
+        public ActionResult ChangePW(FormCollection form)
         {
+            SignInModule signInModule = new SignInModule();
+            try
+            {
+                signInModule.ChangePassword(form);
+                ViewBag.Message = "success";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
             return View();
         }
-
-        #endregion 修改密碼
+        #endregion
     }
 }

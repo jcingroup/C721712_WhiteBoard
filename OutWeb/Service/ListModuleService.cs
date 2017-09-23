@@ -24,7 +24,7 @@ namespace OutWeb.Service
         /// 明細的抽象基底方法
         /// </summary>
         /// <param name="ID"></param>
-        public abstract int DoSaveData(FormCollection form, Language language, int? ID = null);
+        public abstract int DoSaveData(FormCollection form, Language language, int? ID = null, List<HttpPostedFileBase> image = null, List<HttpPostedFileBase> images = null);
 
         /// <summary>
         /// 明細的抽象基底方法

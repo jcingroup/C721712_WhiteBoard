@@ -1,6 +1,7 @@
 ﻿using OutWeb.Entities;
 using OutWeb.Enums;
 using OutWeb.Models;
+using OutWeb.Models.Manage.ImgModels;
 using OutWeb.Models.Manage.ManageNewsModels;
 using OutWeb.Provider;
 using OutWeb.Repositories;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace OutWeb.Modules.Manage
@@ -45,7 +47,7 @@ namespace OutWeb.Modules.Manage
             {
                 ID = s.ID,
                 Title = s.NEWS_TITLE,
-                PublishDate = (DateTime)s.PUB_DT,
+                PublishDateStr = s.PUB_DT,
                 DisplayForFront = (bool)s.DIS_FRONT_ST,
                 DisplayForHomePage = (bool)s.DIS_HOME_ST,
                 SortIndex = s.SR_SQ,
@@ -65,7 +67,7 @@ namespace OutWeb.Modules.Manage
                 {
                     ID = s.ID,
                     Title = s.NEWS_TITLE,
-                    PublishDate = s.PUB_DT,
+                    PublishDateStr = s.PUB_DT,
                     DisplayForFront = (bool)s.DIS_FRONT_ST,
                     DisplayForHomePage = (bool)s.DIS_HOME_ST,
                     Sort = s.SR_SQ,
@@ -115,11 +117,12 @@ namespace OutWeb.Modules.Manage
             return result;
         }
 
-        public override int DoSaveData(FormCollection form, Language language, int? ID = null)
+        public override int DoSaveData(FormCollection form, Language language, int? ID = null, List<HttpPostedFileBase> image = null, List<HttpPostedFileBase> images = null)
         {
             WBNEWS saveModel;
+            ImageRepository imgepository = new ImageRepository();
 
-            if (ID == null)
+            if (!ID.HasValue)
             {
                 saveModel = new WBNEWS();
                 saveModel.BUD_ID = UserProvider.Instance.User.ID;
@@ -133,9 +136,9 @@ namespace OutWeb.Modules.Manage
             saveModel.NEWS_TITLE = form["title"];
             saveModel.DIS_FRONT_ST = form["fSt"] == null ? false : true;
             saveModel.DIS_HOME_ST = form["hSt"] == null ? false : true;
-            saveModel.SR_SQ = Convert.ToInt32(form["sortIndex"]);
+            saveModel.SR_SQ = form["sortIndex"] == null ? 1 : form["sortIndex"] == string.Empty ? 1 : Convert.ToInt32(form["sortIndex"]);
             saveModel.NEWS_CONTENT = form["contenttext"];
-            saveModel.PUB_DT = Convert.ToDateTime(form["publishdate"]);
+            saveModel.PUB_DT = form["publishdate"];
             saveModel.UPD_DT = DateTime.UtcNow.AddHours(8);
             saveModel.UPD_ID = UserProvider.Instance.User.ID;
             saveModel.LANG_CD = language.GetCode();
@@ -148,8 +151,69 @@ namespace OutWeb.Modules.Manage
             {
                 this.DB.WBNEWS.Add(saveModel);
             }
-            this.DB.SaveChanges();
+
+
+            try
+            {
+                this.DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             int identityId = saveModel.ID;
+
+
+            #region 圖片處理
+
+            List<int> oldImgList = new List<int>();
+
+            #region 將原存在的Server圖片保留 記錄圖片ID
+
+            //將原存在的Server圖片保留 記錄圖片ID
+            foreach (var f in form.Keys)
+            {
+                if (f.ToString().StartsWith("MemberData"))
+                {
+                    var id = Convert.ToInt16(form[f.ToString().Split('.')[0] + ".ID"]);
+                    if (!oldImgList.Contains(id))
+                        oldImgList.Add(id);
+                }
+            }
+
+            #endregion 將原存在的Server圖片保留 記錄圖片ID
+
+            #region 建立圖片模型
+
+            ImagesModel imgModel = new ImagesModel()
+            {
+                ActionName = "News",
+                ID = identityId,
+                OldImageIds = oldImgList
+            };
+
+            #endregion 建立圖片模型
+
+            #region 不知道為什麼 前端由js加入的formdata file類型 會多出null 砍了就對了
+
+            if (image != null)
+            {
+                if (image.Count > 0)
+                    image.RemoveAll(item => item == null);
+            }
+
+            #endregion 不知道為什麼 前端由js加入的formdata file類型 會多出null 砍了就對了
+
+            #region img data binding 單筆多筆裝在不同容器
+
+            imgModel.UploadType = "images_s";
+            imgepository.UploadPhoto("Post", imgModel, image, "S");
+            imgepository.SaveImagesToDB(imgModel);
+
+            #endregion img data binding 單筆多筆裝在不同容器
+
+            #endregion 圖片處理
+
             return identityId;
         }
 
@@ -177,7 +241,7 @@ namespace OutWeb.Modules.Manage
         /// <param name="data"></param>
         private void NewsListDateFilter(string publishdate, ref List<NewsListDataModel> data)
         {
-            var r = data.Where(s => s.PublishDate == Convert.ToDateTime(publishdate)).ToList();
+            var r = data.Where(s => s.PublishDateStr == publishdate).ToList();
             data = r;
         }
 
@@ -195,7 +259,6 @@ namespace OutWeb.Modules.Manage
                     result = data.Where(s => s.DisplayForFront == true).ToList();
                 else
                     result = data.Where(s => s.DisplayForFront == false).ToList();
-
             }
             else if (displayMode == "H")
                 if (status == "Y")
@@ -237,12 +300,13 @@ namespace OutWeb.Modules.Manage
             switch (sortCloumn)
             {
                 case "sortPublishDate/asc":
-                    data = data.OrderBy(o => o.PublishDate).ToList();
+                    data = data.OrderBy(o => o.PublishDateStr).ToList();
                     break;
 
                 case "sortPublishDate/desc":
-                    data = data.OrderByDescending(o => o.PublishDate).ToList();
+                    data = data.OrderByDescending(o => o.PublishDateStr).ToList();
                     break;
+
                 case "sortDisplayForFront/asc":
                     data = data.OrderBy(o => o.DisplayForFront).ToList();
                     break;
@@ -250,29 +314,25 @@ namespace OutWeb.Modules.Manage
                 case "sortDisplayForFront/desc":
                     data = data.OrderByDescending(o => o.DisplayForFront).ToList();
                     break;
+
                 case "sortDisplayForHome/asc":
-                    data = data.OrderBy(o => o.DisplayForHomePage).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderBy(o => o.DisplayForHomePage).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
 
                 case "sortDisplayForHome/desc":
-                    data = data.OrderByDescending(o => o.DisplayForHomePage).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderByDescending(o => o.DisplayForHomePage).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
 
                 case "sortIndex/asc":
-                    data = data.OrderBy(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderBy(o => o.Sort).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
 
                 case "sortIndex/desc":
-                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
 
                 default:
-                    //if (status == "N")
-                    //    data = data.Where(s => s.StatusCode == "N").OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
-                    //else if (status == "Y")
-                    //    data = data.Where(s => s.StatusCode == "Y").OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
-                    //else
-                    //    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
             }
         }

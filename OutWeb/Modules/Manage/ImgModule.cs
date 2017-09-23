@@ -20,39 +20,51 @@ namespace OutWeb.Modules.Manage
         /// <param name="model"></param>
         public void SaveImgs(ImagesModel model)
         {
-            var otherImgs = this.DB.WBPIC.Where(o => o.MAP_AC_NM == model.ActionName && o.UP_MODE == model.UploadType.ToString()).ToList();
-
-            if (model.ActionName.StartsWith("School"))
+            if (model.ID > 0)
             {
                 //刪除舊圖
-                foreach (var img in otherImgs)
-                {
-                    var delImg = this.DB.WBPIC.Where(o => o.MAP_NEWS_ID == model.ID && o.UP_MODE == model.UploadType).FirstOrDefault();
-                    if (delImg != null)
-                        this.DB.WBPIC.Remove(delImg);
-                    this.DB.SaveChanges();
-                }
+                if (model.ActionName.StartsWith("Product"))
+                    this.DB.WBPIC.RemoveRange(this.DB.WBPIC.Where(o => !model.OldImageIds.Contains(o.ID) && o.MAP_PRODUCT_ID == model.ID));
+                else if (model.ActionName.StartsWith("News"))
+                    this.DB.WBPIC.RemoveRange(this.DB.WBPIC.Where(o => !model.OldImageIds.Contains(o.ID) && o.MAP_NEWS_ID == model.ID));
+                else if (model.ActionName.StartsWith("Works"))
+                    this.DB.WBPIC.RemoveRange(this.DB.WBPIC.Where(o => !model.OldImageIds.Contains(o.ID) && o.MAP_WORKS_ID == model.ID));
+                this.DB.SaveChanges();
             }
-            else
-            {
-                //刪除舊圖(Banner)
-                foreach (var img in otherImgs)
-                {
-                    var delBannerImg = this.DB.WBPIC.Where(o => o.MAP_NEWS_ID == model.ID).FirstOrDefault();
-                    if (delBannerImg != null)
-                        this.DB.WBPIC.Remove(delBannerImg);
-                    this.DB.SaveChanges();
-                }
-            }
-            //存檔
+
+            //存檔單筆
             foreach (var img in model.MemberData)
             {
-                int sq = model.MemberData.IndexOf(img);
                 WBPIC pic = new WBPIC()
                 {
                     IMG_NM = img.FileName,
                     MAP_AC_NM = model.ActionName,
-                    UP_MODE = model.UploadType ?? "",
+                    UP_MODE = "S",
+                    IMG_URL = img.FileUrl,
+                    IMG_LINK = img.FileUrl,
+                    FILE_PATH = img.FilePath,
+                    SR_SQ = 1,
+                    UP_DT = DateTime.UtcNow.AddHours(8),
+                    UP_USR_ID = UserProvider.Instance.User.ID
+                };
+                if (model.ActionName.StartsWith("Product"))
+                    pic.MAP_PRODUCT_ID = model.ID;
+                else if (model.ActionName.StartsWith("News"))
+                    pic.MAP_NEWS_ID = model.ID;
+                else if (model.ActionName.StartsWith("Works"))
+                    pic.MAP_WORKS_ID = model.ID;
+                this.DB.WBPIC.Add(pic);
+                this.DB.SaveChanges();
+            }
+            //存檔多筆
+            foreach (var img in model.MemberDataMultiple)
+            {
+                int sq = model.MemberDataMultiple.IndexOf(img);
+                WBPIC pic = new WBPIC()
+                {
+                    IMG_NM = img.FileName,
+                    MAP_AC_NM = model.ActionName,
+                    UP_MODE = "M",
                     IMG_URL = img.FileUrl,
                     IMG_LINK = img.FileUrl,
                     FILE_PATH = img.FilePath,
@@ -61,11 +73,12 @@ namespace OutWeb.Modules.Manage
                     UP_USR_ID = UserProvider.Instance.User.ID
                 };
 
-                if (model.ActionName.StartsWith("School"))
+                if (model.ActionName.StartsWith("Product"))
+                    pic.MAP_PRODUCT_ID = model.ID;
+                else if (model.ActionName.StartsWith("News"))
                     pic.MAP_NEWS_ID = model.ID;
-                else
-                    pic.MAP_NEWS_ID = model.ID;
-
+                else if (model.ActionName.StartsWith("Works"))
+                    pic.MAP_WORKS_ID = model.ID;
                 this.DB.WBPIC.Add(pic);
                 this.DB.SaveChanges();
                 img.ID = pic.ID;
@@ -79,7 +92,7 @@ namespace OutWeb.Modules.Manage
         /// <param name="actionName"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public List<MemberViewModel> GetPreviewImg(int ID, string actionName, string actionMode)
+        public List<MemberViewModel> GetImages(int ID, string actionName, string actionMode)
         {
             ImagesModel imgModel = new ImagesModel();
             imgModel.ID = ID;
@@ -87,10 +100,10 @@ namespace OutWeb.Modules.Manage
             imgModel.UploadType = actionMode;
 
             List<MemberViewModel> imgList = new List<MemberViewModel>();
-            if (actionName.StartsWith("School"))
+            if (actionName.StartsWith("Product"))
             {
                 imgList = this.DB.WBPIC
-                        .Where(o => o.MAP_NEWS_ID == ID && o.MAP_AC_NM.StartsWith("School") && o.UP_MODE == actionMode)
+                        .Where(o => o.MAP_PRODUCT_ID == ID && o.MAP_AC_NM.StartsWith("Product") && o.UP_MODE == actionMode)
                         .Select(s => new MemberViewModel()
                         {
                             ID = s.ID,
@@ -100,10 +113,23 @@ namespace OutWeb.Modules.Manage
                         })
                         .ToList();
             }
-            else
+            else if (actionName.StartsWith("News"))
             {
                 imgList = this.DB.WBPIC
-                                   .Where(o => o.MAP_NEWS_ID == ID && o.MAP_AC_NM.StartsWith("Banner"))
+                                   .Where(o => o.MAP_NEWS_ID == ID && o.MAP_AC_NM.StartsWith("News"))
+                                   .Select(s => new MemberViewModel()
+                                   {
+                                       ID = s.ID,
+                                       FileName = s.IMG_NM,
+                                       FileUrl = s.IMG_LINK,
+                                       FilePath = s.FILE_PATH
+                                   })
+                                   .ToList();
+            }
+            else if (actionName.StartsWith("Works"))
+            {
+                imgList = this.DB.WBPIC
+                                   .Where(o => o.MAP_WORKS_ID == ID && o.MAP_AC_NM.StartsWith("Works") && o.UP_MODE == actionMode)
                                    .Select(s => new MemberViewModel()
                                    {
                                        ID = s.ID,

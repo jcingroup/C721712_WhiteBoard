@@ -38,7 +38,7 @@
         public string DisplayForFrontEnd { get; set; }
 
         /// <summary>
-        /// 首頁示
+        /// 首頁顯示
         /// </summary>
         public string DisplayForHomePage { get; set; }
     }

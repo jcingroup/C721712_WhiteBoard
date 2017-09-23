@@ -15,7 +15,7 @@
 }
 
 <h3 class="title">@ViewBag.Crumb <small class="oi" data-glyph="tags">編輯</small></h3>
-@using (Html.BeginForm("ProductDataEdit", "_SysAdm", FormMethod.Post, new { id = "formManageProductData", @class = "form-list" }))
+@using (Html.BeginForm("ProductDataEdit", "_SysAdm", FormMethod.Post, new { id = "formManageProductData", @class = "form-list",@enctype = "multipart/form-data" }))
 {
     Html.RenderPartial("_ProductDataPartial", Model);
 }

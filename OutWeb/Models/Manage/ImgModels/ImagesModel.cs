@@ -1,10 +1,12 @@
-﻿using OutWeb.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace OutWeb.Models.Manage.ImgModels
 {
     public class ImagesModel
     {
+        private List<int> m_oldImageIds = new List<int>();
+        public List<int> OldImageIds { get { return this.m_oldImageIds; } set { this.m_oldImageIds = value; } }
+
         public int ID { get; set; }
 
         /// <summary>
@@ -22,21 +24,12 @@ namespace OutWeb.Models.Manage.ImgModels
         private List<MemberViewModel> m_memberData = new List<MemberViewModel>();
         public List<MemberViewModel> MemberData { get { return m_memberData; } set { this.m_memberData = value; } }
 
-        private List<MemberViewModel> m_memberDataMultiple= new List<MemberViewModel>();
+        private List<MemberViewModel> m_memberDataMultiple = new List<MemberViewModel>();
         public List<MemberViewModel> MemberDataMultiple { get { return m_memberDataMultiple; } set { this.m_memberDataMultiple = value; } }
-
     }
 
     public class MemberViewModel
     {
-        private ModelInitProperty m_InitProperty = ModelInitProperty.New;
-
-        internal ModelInitProperty InitProperty
-        {
-            get { return m_InitProperty; }
-            set { m_InitProperty = value; }
-        }
-
         public int? ID { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }

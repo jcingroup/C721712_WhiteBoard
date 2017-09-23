@@ -57,34 +57,10 @@ namespace OutWeb.Models.Manage.ManageNewsModels
         /// <summary>
         /// 發布日期
         /// </summary>
-        public DateTime? PublishDate { get; set; }
+        public string PublishDateStr { get; set; }
 
-        public string PublishDateStr
-        {
-            get
-            {
-                DateTime d = (DateTime)this.PublishDate;
-                return d.ConvertDateTimeTo10CodeString();
-            }
-        }
-
-        ///// <summary>
-        ///// 狀態
-        ///// </summary>
-        //public string StatusCode { get; set; }
-
-        ///// <summary>
-        ///// 狀態描述
-        ///// </summary>
-        //public string StatusDescription
-        //{
-        //    get
-        //    {
-        //        var eStatus = PublicMethodRepository.GetEnumByValue<StatusEnums>(this.StatusCode);
-        //        return PublicMethodRepository.GetEnumDescription(eStatus);
-        //    }
-        //}
-
+    
+ 
         /// <summary>
         /// 排序
         /// </summary>

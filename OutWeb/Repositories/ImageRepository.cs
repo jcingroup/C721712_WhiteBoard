@@ -1,6 +1,11 @@
-﻿using System;
+﻿using OutWeb.Models.Manage.ImgModels;
+using OutWeb.Modules.Manage;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Web;
 
 namespace OutWeb.Repositories
 {
@@ -9,6 +14,10 @@ namespace OutWeb.Repositories
         private int imgMaxWidth { get; set; }
         private int imgMaxHeight { get; set; }
         private string savePath { get; set; }
+
+        public ImageRepository()
+        {
+        }
 
         public ImageRepository(int maxWidth, int maxHeight, string savePath)
         {
@@ -43,6 +52,108 @@ namespace OutWeb.Repositories
         //    //imgModule.SaveImgs(ID, imgList);
         //}
 
+        #region 儲存處理函式
+
+        /// <summary>
+        /// 寫Log查看表單post的結果
+        /// </summary>
+        /// <param name="vm"></param>
+        public void SaveImagesToDB(ImagesModel vm)
+        {
+            ImgModule imgModule = new ImgModule();
+            imgModule.SaveImgs(vm);
+        }
+
+        /// <summary>
+        /// 上傳照片
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <param name="myFile"></param>
+        public void UploadPhoto(string uploadType, ImagesModel vm, List<HttpPostedFileBase> images, string mode)
+        {
+            string serverMapPath = string.Empty;
+
+            if (uploadType == "upload")
+                serverMapPath = "~/Content/Upload/Manage/Images/Temp/";
+            else
+                serverMapPath = "~/Content/Upload/Manage/Images/";
+            if (mode == "S")
+            {
+                foreach (var m in vm.MemberData)
+                    m.FilePath = HttpContext.Current.Server.MapPath(serverMapPath + m.FileName);
+            }
+            else
+            {
+                foreach (var m in vm.MemberDataMultiple)
+                    m.FilePath = HttpContext.Current.Server.MapPath(serverMapPath + m.FileName);
+            }
+            int imgMaxWidth = 0;
+            int imgMaxHeight = 0;
+
+            switch (uploadType)
+            {
+                case "S":
+                    imgMaxWidth = 400;
+                    imgMaxHeight = 300;
+                    break;
+
+                case "M":
+                    imgMaxWidth = 1000;
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (images != null && images.Count > 0)
+            {
+                for (int i = 0; i < images.Count; i++)
+                {
+                    string strFileName = uploadType == "upload" ? images[i].FileName : Guid.NewGuid().ToString() + Path.GetExtension(images[i].FileName);
+                    string strFilePath = HttpContext.Current.Server.MapPath(serverMapPath + strFileName);
+                    if (uploadType == "post")
+                    {
+                        #region 圖片尺寸調整
+
+                        ImageRepository imageRepository = new ImageRepository(imgMaxWidth, imgMaxHeight, strFilePath);
+                        Image img = Image.FromStream(images[i].InputStream);
+                        imageRepository.SaveAdjustImageSize((Bitmap)img);
+
+                        #endregion 圖片尺寸調整
+                    }
+                    else
+                    {
+                        images[i].SaveAs(strFilePath);
+                    }
+
+                    #region data binding to model
+
+                    if (mode == "S")
+                    {
+                        vm.MemberData.Add(new MemberViewModel()
+                        {
+                            FilePath = strFilePath,
+                            FileName = strFileName,
+                            FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName,
+                        });
+                    }
+                    else if (mode == "M")
+                    {
+                        vm.MemberDataMultiple.Add(new MemberViewModel()
+                        {
+                            FilePath = strFilePath,
+                            FileName = strFileName,
+                            FileUrl = serverMapPath.Substring(2, serverMapPath.Length - 2) + strFileName,
+                        });
+                    }
+
+                    #endregion data binding to model
+                }
+            }
+        }
+
+        #endregion 儲存處理函式
+
         /// <summary>
         /// 調整圖片大小並儲存(等比例縮圖)
         /// </summary>
@@ -52,7 +163,7 @@ namespace OutWeb.Repositories
         {
             if (image.Width > imgMaxWidth)
                 this.ThumbPicWidth(image, this.imgMaxWidth);
-            else if (image.Height > imgMaxHeight)
+            else if (image.Height > 0 && image.Height > imgMaxHeight)
                 this.ThumbPicHeight(image, this.imgMaxHeight);
             else
                 image.Save(this.savePath);

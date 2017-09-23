@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace OutWeb.Modules.Manage
@@ -114,11 +115,11 @@ namespace OutWeb.Modules.Manage
             return result;
         }
 
-        public override int DoSaveData(FormCollection form, Language language, int? ID = default(int?))
+        public override int DoSaveData(FormCollection form, Language language, int? ID = default(int?), List<HttpPostedFileBase> image = null, List<HttpPostedFileBase> images = null)
         {
             WBPRODUCTTYPE saveModel;
 
-            if (ID == null)
+            if (!ID.HasValue)
             {
                 saveModel = new WBPRODUCTTYPE();
                 saveModel.BUD_ID = UserProvider.Instance.User.ID;
@@ -130,7 +131,7 @@ namespace OutWeb.Modules.Manage
             }
             saveModel.PRD_TP_NM = form["typeName"];
             saveModel.PRD_TP_ST = form["status"];
-            saveModel.SR_SQ = Convert.ToInt32(form["sortIndex"]);
+            saveModel.SR_SQ = form["sortIndex"] == null ? 1 : form["sortIndex"] == string.Empty ? 1 : Convert.ToInt32(form["sortIndex"]);
             saveModel.UPD_DT = DateTime.UtcNow.AddHours(8);
             saveModel.UPD_USR_ID = UserProvider.Instance.User.ID;
             saveModel.LANG_CD = language.GetCode();
@@ -257,10 +258,15 @@ namespace OutWeb.Modules.Manage
         /// 取得產品分類下拉選單資料
         /// </summary>
         /// <param name="defualt"></param>
+        /// <param name="isListMode">是否為列表模式</param>
+        /// <param name="isDisplayFrontIsFalse">判斷分類是否已被停用</param>
         /// <returns></returns>
-        public SelectList CreateProductKindDropList(int? defualt, bool isListMode = true)
+        public SelectList CreateProductKindDropList(int? defualt, bool isListMode = true, bool isDisplayFrontIsFalse = true)
         {
-            List<SelectListItem> types = DB.WBPRODUCTTYPE.Where(o => o.PRD_TP_ST == "Y").Select(s => new SelectListItem() { Value = s.ID.ToString(), Text = s.PRD_TP_NM }).ToList();
+
+            List<SelectListItem> types = DB.WBPRODUCTTYPE.Where(o => isDisplayFrontIsFalse ? o.PRD_TP_ST == "Y" : true)
+                .Select(s => new SelectListItem() { Value = s.ID.ToString(), Text = s.PRD_TP_NM })
+                .ToList();
             string itemTxt = "";
             if (isListMode)
             {

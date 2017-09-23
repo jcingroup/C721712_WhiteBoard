@@ -14,16 +14,9 @@ namespace OutWeb.Models.Manage.ManageNewsModels
 
         public int ID { get; set; }
         public string Title { get; set; }
-        public DateTime? PublishDate { get; set; }
+        public string PublishDateStr { get; set; }
 
-        public string PublishDateStr
-        {
-            get
-            {
-                string dateStr = PublishDate == null ? DateTime.UtcNow.AddHours(8).ConvertDateTimeTo10CodeString() : PublicMethodRepository.ConvertDateTimeTo10CodeString((DateTime)this.PublishDate);
-                return dateStr;
-            }
-        }
+
         /// <summary>
         /// 前台顯示
         /// </summary>

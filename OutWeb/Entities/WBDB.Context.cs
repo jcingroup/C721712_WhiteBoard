@@ -31,5 +31,7 @@ namespace OutWeb.Entities
         public virtual DbSet<WBPRODUCT> WBPRODUCT { get; set; }
         public virtual DbSet<WBPRODUCTTYPE> WBPRODUCTTYPE { get; set; }
         public virtual DbSet<WBUSR> WBUSR { get; set; }
+        public virtual DbSet<WBWORKS> WBWORKS { get; set; }
+        public virtual DbSet<WBAGENT> WBAGENT { get; set; }
     }
 }

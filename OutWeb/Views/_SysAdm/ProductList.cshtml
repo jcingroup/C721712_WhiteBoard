@@ -1,6 +1,5 @@
 ﻿
 @using OutWeb.Models.Manage.ProductModels
-@using OutWeb.Repositories
 @model ProductListViewModel
 
 @{
@@ -49,7 +48,7 @@
                 //刪除
                 $('.delete-btn').click(function () {
                     var id = $(this).attr('data-id');
-                    var url = "@Url.Content("~/_SysAdm/ProductDataEditDelete")";
+                    var url = "@Url.Content("~/_SysAdm/ProductDataDelete")";
                     $.ajax({
                         async: false,
                         url: url,
@@ -61,6 +60,7 @@
                                 window.location.reload()
                             }
                             else {
+                                $('#error_msg').html(data.messages);
                                 alert(data.messages);
                             }
                         }, error: function (error) {
@@ -115,7 +115,7 @@
 {
 <div class="alert-warning mb-16">
     <strong>前台排序：</strong> 數字愈大愈前面。<br>
-    <strong>刪除：</strong> @* 這裡要說明刪除規則 *@
+    <strong>刪除：<span id="error_msg"></span></strong> @* 這裡要說明刪除規則 *@
 </div>
 
 <div class="topBtn-bar btn-group">

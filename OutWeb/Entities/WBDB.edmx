@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WBDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="WBAGENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AGENT_CONTENT" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="WBLOGERR">
           <Key>
             <PropertyRef Name="ID" />
@@ -26,7 +33,7 @@
           <Property Name="UPD_ID" Type="int" />
           <Property Name="UPD_DT" Type="datetime" />
           <Property Name="NEWS_TITLE" Type="nvarchar" MaxLength="200" />
-          <Property Name="PUB_DT" Type="datetime" />
+          <Property Name="PUB_DT" Type="nvarchar" MaxLength="10" />
           <Property Name="NEWS_CONTENT" Type="nvarchar(max)" />
           <Property Name="LANG_CD" Type="varchar" MaxLength="5" />
           <Property Name="SR_SQ" Type="int" />
@@ -48,6 +55,8 @@
           <Property Name="UP_MODE" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="SR_SQ" Type="int" Nullable="false" />
           <Property Name="MAP_NEWS_ID" Type="int" Nullable="false" />
+          <Property Name="MAP_PRODUCT_ID" Type="int" Nullable="false" />
+          <Property Name="MAP_WORKS_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="WBPRODUCT">
           <Key>
@@ -100,13 +109,31 @@
           <Property Name="UPD_USRID" Type="int" Nullable="false" />
           <Property Name="UPD_DTM" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="WBWORKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BUD_USRID" Type="int" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPD_USRID" Type="int" Nullable="false" />
+          <Property Name="UPD_DT" Type="datetime" Nullable="false" />
+          <Property Name="WKS_TITLE" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="WKS_CONTENT" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LANG_CD" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="DIS_FRONT_ST" Type="bit" Nullable="false" />
+          <Property Name="SR_SQ" Type="int" Nullable="false" />
+          <Property Name="PUB_DT" Type="nvarchar" MaxLength="10" />
+        </EntityType>
         <EntityContainer Name="WBDBModelStoreContainer">
+          <EntitySet Name="WBAGENT" EntityType="Self.WBAGENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WBLOGERR" EntityType="Self.WBLOGERR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WBNEWS" EntityType="Self.WBNEWS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WBPIC" EntityType="Self.WBPIC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WBPRODUCT" EntityType="Self.WBPRODUCT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WBPRODUCTTYPE" EntityType="Self.WBPRODUCTTYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WBUSR" EntityType="Self.WBUSR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WBWORKS" EntityType="Self.WBWORKS" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -119,6 +146,8 @@
           <EntitySet Name="WBPRODUCT" EntityType="WBDBModel.WBPRODUCT" />
           <EntitySet Name="WBPRODUCTTYPE" EntityType="WBDBModel.WBPRODUCTTYPE" />
           <EntitySet Name="WBUSR" EntityType="WBDBModel.WBUSR" />
+          <EntitySet Name="WBWORKS" EntityType="WBDBModel.WBWORKS" />
+          <EntitySet Name="WBAGENT" EntityType="WBDBModel.WBAGENT" />
         </EntityContainer>
         <EntityType Name="WBLOGERR">
           <Key>
@@ -141,7 +170,7 @@
           <Property Name="UPD_ID" Type="Int32" />
           <Property Name="UPD_DT" Type="DateTime" Precision="3" />
           <Property Name="NEWS_TITLE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PUB_DT" Type="DateTime" Precision="3" />
+          <Property Name="PUB_DT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="NEWS_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LANG_CD" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="SR_SQ" Type="Int32" />
@@ -163,6 +192,8 @@
           <Property Name="UP_MODE" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="SR_SQ" Type="Int32" Nullable="false" />
           <Property Name="MAP_NEWS_ID" Type="Int32" Nullable="false" />
+          <Property Name="MAP_PRODUCT_ID" Type="Int32" Nullable="false" />
+          <Property Name="MAP_WORKS_ID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="WBPRODUCT">
           <Key>
@@ -215,6 +246,29 @@
           <Property Name="UPD_USRID" Type="Int32" Nullable="false" />
           <Property Name="UPD_DTM" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="WBWORKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BUD_USRID" Type="Int32" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_USRID" Type="Int32" Nullable="false" />
+          <Property Name="UPD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="WKS_TITLE" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="WKS_CONTENT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LANG_CD" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DIS_FRONT_ST" Type="Boolean" Nullable="false" />
+          <Property Name="SR_SQ" Type="Int32" Nullable="false" />
+          <Property Name="PUB_DT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WBAGENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AGENT_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -254,6 +308,8 @@
           <EntitySetMapping Name="WBPIC">
             <EntityTypeMapping TypeName="WBDBModel.WBPIC">
               <MappingFragment StoreEntitySet="WBPIC">
+                <ScalarProperty Name="MAP_WORKS_ID" ColumnName="MAP_WORKS_ID" />
+                <ScalarProperty Name="MAP_PRODUCT_ID" ColumnName="MAP_PRODUCT_ID" />
                 <ScalarProperty Name="MAP_NEWS_ID" ColumnName="MAP_NEWS_ID" />
                 <ScalarProperty Name="SR_SQ" ColumnName="SR_SQ" />
                 <ScalarProperty Name="UP_MODE" ColumnName="UP_MODE" />
@@ -318,6 +374,31 @@
                 <ScalarProperty Name="USR_NM" ColumnName="USR_NM" />
                 <ScalarProperty Name="SIGNIN_PWD" ColumnName="SIGNIN_PWD" />
                 <ScalarProperty Name="SIGNIN_ID" ColumnName="SIGNIN_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WBWORKS">
+            <EntityTypeMapping TypeName="WBDBModel.WBWORKS">
+              <MappingFragment StoreEntitySet="WBWORKS">
+                <ScalarProperty Name="PUB_DT" ColumnName="PUB_DT" />
+                <ScalarProperty Name="SR_SQ" ColumnName="SR_SQ" />
+                <ScalarProperty Name="DIS_FRONT_ST" ColumnName="DIS_FRONT_ST" />
+                <ScalarProperty Name="LANG_CD" ColumnName="LANG_CD" />
+                <ScalarProperty Name="WKS_CONTENT" ColumnName="WKS_CONTENT" />
+                <ScalarProperty Name="WKS_TITLE" ColumnName="WKS_TITLE" />
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="UPD_USRID" ColumnName="UPD_USRID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="BUD_USRID" ColumnName="BUD_USRID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WBAGENT">
+            <EntityTypeMapping TypeName="WBDBModel.WBAGENT">
+              <MappingFragment StoreEntitySet="WBAGENT">
+                <ScalarProperty Name="AGENT_CONTENT" ColumnName="AGENT_CONTENT" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

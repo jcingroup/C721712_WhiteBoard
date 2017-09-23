@@ -160,7 +160,7 @@
 
         <th class="item-edit">刪除</th>
         <th class="item-edit">修改</th>
-        <th><button id="sortPublishDate" sort-type="" class="th-sort-toggle">發佈日期</button></th>
+        <th><button id="sortPublishDate" type="button" sort-type="" class="th-sort-toggle">發佈日期</button></th>
         <th class="text-left">標題</th>
         <th><button id="sortDisplayForFront" type="button" sort-type="" class="th-sort-toggle">前台顯示</button></th>
         <th><button id="sortDisplayForHome" type="button" sort-type="" class="th-sort-toggle">首頁顯示</button></th>
@@ -179,7 +179,7 @@
 
             <td><button class="hover-danger oi delete-btn" title="刪除" type="button" data-glyph="trash" data-id="@data.ID"></button></td>
             <td><button class="hover-primary oi" title="修改" data-glyph="pencil" type="button" onclick="location.href='@Url.Content("~/_SysAdm/NewsEdit?ID=" + data.ID)'"></button></td>
-            <td>@data.PublishDate</td>
+            <td>@data.PublishDateStr</td>
             <td class="text-left">@data.Title</td>
             <td><span class="@disFrontStyle">@data.DisplayForFrontStr</span></td>
             <td><span class="@disHomeStyle">@data.DisplayForHomePageStr</span></td>

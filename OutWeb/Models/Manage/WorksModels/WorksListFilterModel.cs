@@ -1,19 +1,25 @@
-﻿namespace OutWeb.Models.Manage.ManageBannerModels
+﻿namespace OutWeb.Models.Manage.WorksModels
 {
     /// <summary>
-    /// 心得分享列表資過濾條件模型
+    /// 最新消息列表資過濾條件模型
     /// </summary>
-    public class BannerListFilterModel
+    public class WorksListFilterModel
     {
         /// <summary>
         /// 選取頁面
         /// </summary>
         public int CurrentPage { get; set; }
 
+
         /// <summary>
-        /// 查詢狀態
+        /// 發布日期
         /// </summary>
-        public string Status { get; set; }
+        public string PublishDate { get; set; }
+
+        /// <summary>
+        /// 前台顯示
+        /// </summary>
+        public string DisplayForFrontEnd { get; set; }
 
         /// <summary>
         /// 查詢關鍵字

@@ -12,20 +12,9 @@ namespace OutWeb.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class WBPIC
+    public partial class WBAGENT
     {
         public int ID { get; set; }
-        public string MAP_AC_NM { get; set; }
-        public string IMG_NM { get; set; }
-        public string IMG_URL { get; set; }
-        public string IMG_LINK { get; set; }
-        public string FILE_PATH { get; set; }
-        public System.DateTime UP_DT { get; set; }
-        public int UP_USR_ID { get; set; }
-        public string UP_MODE { get; set; }
-        public int SR_SQ { get; set; }
-        public int MAP_NEWS_ID { get; set; }
-        public int MAP_PRODUCT_ID { get; set; }
-        public int MAP_WORKS_ID { get; set; }
+        public string AGENT_CONTENT { get; set; }
     }
 }

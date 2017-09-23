@@ -22,13 +22,13 @@ namespace OutWeb.Service
                     listManageModule = new ProductKindModule();
                     break;
 
-                //case ListMethodType.SCHOOL:
-                //    listManageModule = new SchoolModule();
-                //    break;
+                case ListMethodType.WORKS:
+                    listManageModule = new WorksModule();
+                    break;
 
-                //case ListMethodType.BANNER:
-                //    listManageModule = new BannerModule();
-                //    break;
+                case ListMethodType.AGENT:
+                    listManageModule = new AgentModule();
+                    break;
 
                 default:
                     listManageModule = null;

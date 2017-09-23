@@ -2,8 +2,7 @@
 using OutWeb.Enums;
 using OutWeb.Models;
 using OutWeb.Models.Manage.ImgModels;
-using OutWeb.Models.Manage.ProductKindModels;
-using OutWeb.Models.Manage.ProductModels;
+using OutWeb.Models.Manage.WorksModels;
 using OutWeb.Provider;
 using OutWeb.Repositories;
 using OutWeb.Service;
@@ -16,7 +15,7 @@ using System.Web.Mvc;
 
 namespace OutWeb.Modules.Manage
 {
-    public class ProductModule : ListModuleService
+    public class WorksModule : ListModuleService
     {
         private WBDBEntities m_DB = new WBDBEntities();
 
@@ -25,36 +24,32 @@ namespace OutWeb.Modules.Manage
 
         public override void DoDeleteByID(int ID)
         {
-            var img = this.DB.WBPIC.Where(s => s.MAP_NEWS_ID == ID).FirstOrDefault();
-            var data = this.DB.WBPRODUCT.Where(s => s.ID == ID).FirstOrDefault();
+            var img = this.DB.WBPIC.Where(s => s.MAP_WORKS_ID == ID).FirstOrDefault();
+            var data = this.DB.WBWORKS.Where(s => s.ID == ID).FirstOrDefault();
             if (data == null)
-                throw new Exception("[刪除產品] 查無此產品，可能已被移除");
+                throw new Exception("[刪除案例] 查無此案例，可能已被移除");
             try
             {
                 if (img != null)
                     this.DB.WBPIC.Remove(img);
-                this.DB.WBPRODUCT.Remove(data);
+                this.DB.WBWORKS.Remove(data);
                 this.DB.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw new Exception("[刪除產品]" + ex.Message);
+                throw new Exception("[刪除案例]" + ex.Message);
             }
         }
 
         public override object DoGetDetailsByID(int ID)
         {
-            ProductDetailsDataModel data = DB.WBPRODUCT.Select(s => new ProductDetailsDataModel
+            WorksDetailsDataModel data = DB.WBWORKS.Select(s => new WorksDetailsDataModel
             {
                 ID = s.ID,
-                ProductName = s.PRD_NM,
-                TypeID = s.MAP_PRODUCT_TP_ID,
+                WorksPulishDateStr = s.PUB_DT,
+                WorksTitle = s.WKS_TITLE,
                 Sort = s.SR_SQ,
-                ProductType = s.PRD_TP,
-                ProductFeatures = s.PRD_FEAT,
-                ProductMaterial = s.PRD_MT,
-                ProductSpecification = s.PRD_SPE,
-                Content = s.PRD_CONTENT,
+                Content = s.WKS_CONTENT,
                 DisplayForFrontEnd = (bool)s.DIS_FRONT_ST
             }).Where(w => w.ID == ID).FirstOrDefault();
             return data;
@@ -62,26 +57,21 @@ namespace OutWeb.Modules.Manage
 
         public override object DoGetList<TFilter>(TFilter model, Language language)
         {
-            ProductListFilterModel filterModel = (model as ProductListFilterModel);
-            ProductListResultModel result = new ProductListResultModel();
-            List<ProductListDataModel> data = new List<ProductListDataModel>();
+            WorksListFilterModel filterModel = (model as WorksListFilterModel);
+            WorksListResultModel result = new WorksListResultModel();
+            List<WorksListDataModel> data = new List<WorksListDataModel>();
             try
             {
-                data = DB.WBPRODUCT.Select(s => new ProductListDataModel()
+                data = DB.WBWORKS.Select(s => new WorksListDataModel()
                 {
                     ID = s.ID,
-                    ProductName = s.PRD_NM,
-                    TypeID = s.MAP_PRODUCT_TP_ID,
+                    PublishDateStr = s.PUB_DT,
+                    WorksName = s.WKS_TITLE,
                     Sort = s.SR_SQ,
                     Language = s.LANG_CD,
                     DisplayForFront = (bool)s.DIS_FRONT_ST
                 })
                  .ToList();
-                ProductKindModule ProductTypeModule = new ProductKindModule();
-                foreach (var d in data)
-                {
-                    d.ProductType = (ProductTypeModule.DoGetDetailsByID(d.TypeID) as ProductKindDetailsDataModel);
-                }
 
                 //語系搜尋
                 if (!language.Equals(Language.NotSet))
@@ -94,21 +84,21 @@ namespace OutWeb.Modules.Manage
                 {
                     this.ListFilter(filterModel.QueryString, ref data);
                 }
-                //日期搜尋
-                //this.ListDateFilter(filterModel.BeginDate, filterModel.EndDate, ref data);
 
-                //分類搜尋
-                if (filterModel.TypeID.HasValue && filterModel.TypeID > 0)
-                    this.ListTypeFilter(filterModel.TypeID.ToString(), ref data);
-
-                //產品分類
-                if (!string.IsNullOrEmpty(filterModel.Status))
+                //發佈日期搜尋
+                if (!string.IsNullOrEmpty(filterModel.PublishDate))
                 {
-                    this.ListStatusFilter(filterModel.Status, ref data);
+                    this.ListDateFilter(filterModel.PublishDate, ref data);
                 }
-     
+
                 //前台顯示
-                this.ListSort(filterModel.SortColumn, filterModel.Status, ref data);
+                if (!string.IsNullOrEmpty(filterModel.DisplayForFrontEnd))
+                {
+                    this.ListStatusFilter(filterModel.DisplayForFrontEnd, ref data);
+                }
+
+                //前台顯示
+                this.ListSort(filterModel.SortColumn, filterModel.DisplayForFrontEnd, ref data);
                 PaginationResult pagination;
                 //分頁
                 this.ListPageList(filterModel.CurrentPage, ref data, out pagination);
@@ -124,28 +114,24 @@ namespace OutWeb.Modules.Manage
 
         public override int DoSaveData(FormCollection form, Language language, int? ID = default(int?), List<HttpPostedFileBase> image = null, List<HttpPostedFileBase> images = null)
         {
-            WBPRODUCT saveModel;
+            WBWORKS saveModel;
             ImageRepository imgepository = new ImageRepository();
 
             if (!ID.HasValue)
             {
-                saveModel = new WBPRODUCT();
+                saveModel = new WBWORKS();
                 saveModel.BUD_USRID = UserProvider.Instance.User.ID;
                 saveModel.BUD_DT = DateTime.UtcNow.AddHours(8);
             }
             else
             {
-                saveModel = this.DB.WBPRODUCT.Where(s => s.ID == ID).FirstOrDefault();
+                saveModel = this.DB.WBWORKS.Where(s => s.ID == ID).FirstOrDefault();
             }
-            saveModel.PRD_NM = form["prName"] == null ? "" : form["prName"];
-            saveModel.PRD_TP = form["prType"] == null ? "" : form["prType"];
-            saveModel.PRD_SPE = form["prSpe"] == null ? "" : form["prSpe"];
-            saveModel.PRD_MT = form["prMt"] == null ? "" : form["prMt"];
-            saveModel.PRD_FEAT = form["prFeat"] == null ? "" : form["prFeat"];
-            saveModel.MAP_PRODUCT_TP_ID = form["type"] == null ? 0 : Convert.ToInt32(form["type"]);
+            saveModel.PUB_DT = form["wkDt"] == null ? "" : form["wkDt"];
+            saveModel.WKS_TITLE = form["wTitle"] == null ? "" : form["wTitle"];
             saveModel.SR_SQ = form["sortIndex"] == null ? 1 : form["sortIndex"] == string.Empty ? 1 : Convert.ToInt32(form["sortIndex"]);
             saveModel.DIS_FRONT_ST = form["fSt"] == null ? false : true;
-            saveModel.PRD_CONTENT = form["contenttext"] == null ? "" : form["contenttext"];
+            saveModel.WKS_CONTENT = form["contenttext"] == null ? "" : form["contenttext"];
             saveModel.UPD_DT = DateTime.UtcNow.AddHours(8);
             saveModel.UPD_USRID = UserProvider.Instance.User.ID;
             saveModel.LANG_CD = language.GetCode();
@@ -153,9 +139,9 @@ namespace OutWeb.Modules.Manage
             if (ID.HasValue)
                 this.DB.Entry(saveModel).State = EntityState.Modified;
             else
-                this.DB.WBPRODUCT.Add(saveModel);
+                this.DB.WBWORKS.Add(saveModel);
 
-     
+
             try
             {
                 this.DB.SaveChanges();
@@ -198,7 +184,7 @@ namespace OutWeb.Modules.Manage
 
             ImagesModel imgModel = new ImagesModel()
             {
-                ActionName = "Product",
+                ActionName = "Works",
                 ID = identityId,
                 OldImageIds = oldImgList
             };
@@ -240,7 +226,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="language"></param>
         /// <param name="data"></param>
-        private void ListFilterLanguage(Language language, ref List<ProductListDataModel> data)
+        private void ListFilterLanguage(Language language, ref List<WorksListDataModel> data)
         {
             var r = data.Where(s => s.Language == language.GetCode()).ToList();
             data = r;
@@ -251,9 +237,9 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListFilter(string filterStr, ref List<ProductListDataModel> data)
+        private void ListFilter(string filterStr, ref List<WorksListDataModel> data)
         {
-            var r = data.Where(s => s.ProductName.Contains(filterStr)).ToList();
+            var r = data.Where(s => s.WorksName.Contains(filterStr)).ToList();
             data = r;
         }
 
@@ -263,7 +249,7 @@ namespace OutWeb.Modules.Manage
         /// <param name="typeCode"></param>
         /// <param name="data"></param>
 
-        private void ListTypeFilter(string typeCode, ref List<ProductListDataModel> data)
+        private void ListTypeFilter(string typeCode, ref List<WorksListDataModel> data)
         {
             var r = data.Where(s => s.TypeID.ToString().Contains(typeCode)).ToList();
             data = r;
@@ -274,9 +260,9 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListDateFilter(string beginDate, string endDate, ref List<ProductListDataModel> data)
+        private void ListDateFilter(string publishdate, ref List<WorksListDataModel> data)
         {
-            var r = data.Where(s => Convert.ToDateTime(s.ProductBulidDateStr) >= Convert.ToDateTime(beginDate) && Convert.ToDateTime(s.ProductBulidDateStr) <= Convert.ToDateTime(endDate)).ToList();
+            var r = data.Where(s => s.PublishDateStr == publishdate).ToList();
             data = r;
         }
 
@@ -285,7 +271,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="filterStr"></param>
         /// <param name="data"></param>
-        private void ListStatusFilter(string filterStatus, ref List<ProductListDataModel> data)
+        private void ListStatusFilter(string filterStatus, ref List<WorksListDataModel> data)
         {
             bool bDisplayForFront = filterStatus == "Y" ? true : false;
             var r = data.Where(s => s.DisplayForFront == bDisplayForFront).ToList();
@@ -297,7 +283,7 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="currentPage"></param>
         /// <param name="data"></param>
-        private void ListPageList(int currentPage, ref List<ProductListDataModel> data, out PaginationResult pagination)
+        private void ListPageList(int currentPage, ref List<WorksListDataModel> data, out PaginationResult pagination)
         {
             int pageSize = (int)PageSizeConfig.SIZE10;
             int startRow = (currentPage - 1) * pageSize;
@@ -319,16 +305,16 @@ namespace OutWeb.Modules.Manage
         /// </summary>
         /// <param name="sortCloumn"></param>
         /// <param name="data"></param>
-        private void ListSort(string sortCloumn, string status, ref List<ProductListDataModel> data)
+        private void ListSort(string sortCloumn, string status, ref List<WorksListDataModel> data)
         {
             switch (sortCloumn)
             {
-                case "sortType/asc":
-                    data = data.OrderBy(o => o.TypeID.ToString()).ThenByDescending(g => g.Sort).ToList();
+                case "sortPublishDate/asc":
+                    data = data.OrderBy(o => o.PublishDateStr).ToList();
                     break;
 
-                case "sortType/desc":
-                    data = data.OrderByDescending(o => o.TypeID.ToString()).ThenByDescending(g => g.Sort).ToList();
+                case "sortPublishDate/desc":
+                    data = data.OrderByDescending(o => o.PublishDateStr).ToList();
                     break;
 
                 case "sortDisplayForFront/asc":
@@ -340,15 +326,15 @@ namespace OutWeb.Modules.Manage
                     break;
 
                 case "sortIndex/asc":
-                    data = data.OrderBy(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderBy(o => o.Sort).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
 
                 case "sortIndex/desc":
-                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
 
                 default:
-                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDate).ToList();
+                    data = data.OrderByDescending(o => o.Sort).ThenByDescending(g => g.PublishDateStr).ToList();
                     break;
             }
         }

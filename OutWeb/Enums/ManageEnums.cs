@@ -82,8 +82,11 @@ namespace OutWeb.Enums
         [Description("產品資料")]
         PRODUCT,
 
-        [Description("網站資料設定")]
-        BANNER,
+        [Description("案例分享")]
+        WORKS,
+
+        [Description("代理商")]
+        AGENT
     }
 
     /// <summary>
