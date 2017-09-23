@@ -140,6 +140,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="WBDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="WBDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="WBAGENT" EntityType="WBDBModel.WBAGENT" />
           <EntitySet Name="WBLOGERR" EntityType="WBDBModel.WBLOGERR" />
           <EntitySet Name="WBNEWS" EntityType="WBDBModel.WBNEWS" />
           <EntitySet Name="WBPIC" EntityType="WBDBModel.WBPIC" />
@@ -147,8 +148,14 @@
           <EntitySet Name="WBPRODUCTTYPE" EntityType="WBDBModel.WBPRODUCTTYPE" />
           <EntitySet Name="WBUSR" EntityType="WBDBModel.WBUSR" />
           <EntitySet Name="WBWORKS" EntityType="WBDBModel.WBWORKS" />
-          <EntitySet Name="WBAGENT" EntityType="WBDBModel.WBAGENT" />
         </EntityContainer>
+        <EntityType Name="WBAGENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AGENT_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="WBLOGERR">
           <Key>
             <PropertyRef Name="ID" />
@@ -262,19 +269,20 @@
           <Property Name="SR_SQ" Type="Int32" Nullable="false" />
           <Property Name="PUB_DT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="WBAGENT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AGENT_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="WBDBModelStoreContainer" CdmEntityContainer="WBDBEntities">
+          <EntitySetMapping Name="WBAGENT">
+            <EntityTypeMapping TypeName="WBDBModel.WBAGENT">
+              <MappingFragment StoreEntitySet="WBAGENT">
+                <ScalarProperty Name="AGENT_CONTENT" ColumnName="AGENT_CONTENT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WBLOGERR">
             <EntityTypeMapping TypeName="WBDBModel.WBLOGERR">
               <MappingFragment StoreEntitySet="WBLOGERR">
@@ -391,14 +399,6 @@
                 <ScalarProperty Name="UPD_USRID" ColumnName="UPD_USRID" />
                 <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
                 <ScalarProperty Name="BUD_USRID" ColumnName="BUD_USRID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WBAGENT">
-            <EntityTypeMapping TypeName="WBDBModel.WBAGENT">
-              <MappingFragment StoreEntitySet="WBAGENT">
-                <ScalarProperty Name="AGENT_CONTENT" ColumnName="AGENT_CONTENT" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -25,6 +25,7 @@ namespace OutWeb.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<WBAGENT> WBAGENT { get; set; }
         public virtual DbSet<WBLOGERR> WBLOGERR { get; set; }
         public virtual DbSet<WBNEWS> WBNEWS { get; set; }
         public virtual DbSet<WBPIC> WBPIC { get; set; }
@@ -32,6 +33,5 @@ namespace OutWeb.Entities
         public virtual DbSet<WBPRODUCTTYPE> WBPRODUCTTYPE { get; set; }
         public virtual DbSet<WBUSR> WBUSR { get; set; }
         public virtual DbSet<WBWORKS> WBWORKS { get; set; }
-        public virtual DbSet<WBAGENT> WBAGENT { get; set; }
     }
 }

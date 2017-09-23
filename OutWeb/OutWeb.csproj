@@ -171,6 +171,9 @@
     <Compile Include="Controllers\WorksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\_SysAdmController.cs" />
+    <Compile Include="Entities\WBAGENT.cs">
+      <DependentUpon>WBDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\WBDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +207,9 @@
     <Compile Include="Entities\WBUSR.cs">
       <DependentUpon>WBDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\WBWORKS.cs">
+      <DependentUpon>WBDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums\ManageEnums.cs" />
     <Compile Include="Enums\ModelInitProperty.cs" />
     <Compile Include="Exceptions\ProductKindRelationExcption.cs" />
@@ -219,17 +225,8 @@
     <Compile Include="Models\FrontEnd\ProductFrontEndModels\ProductFrontEndDetalisDataModel.cs" />
     <Compile Include="Models\FrontEnd\ProductFrontEndModels\ProductFrontEndListDataModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
+    <Compile Include="Models\Manage\AgentModels\AgentDataModel.cs" />
     <Compile Include="Models\Manage\ImgModels\ImagesModel.cs" />
-    <Compile Include="Models\Manage\ManageBannerModels\BannerDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\ManageBannerModels\BannerListDataModel.cs" />
-    <Compile Include="Models\Manage\ManageBannerModels\BannerListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageBannerModels\BannerListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageBannerModels\BannerListViewModel.cs" />
-    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListDataModel.cs" />
-    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListFilterModel.cs" />
-    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListResultModel.cs" />
-    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListViewModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsDetailsDataModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsListDataModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsListFilterModel.cs" />
@@ -245,17 +242,24 @@
     <Compile Include="Models\Manage\ProductKindModels\ProductKindListFilterModel.cs" />
     <Compile Include="Models\Manage\ProductKindModels\ProductKindListResultModel.cs" />
     <Compile Include="Models\Manage\ProductKindModels\ProductKindListViewModel.cs" />
+    <Compile Include="Models\Manage\WorksModels\WorksDetailsDataModel.cs" />
+    <Compile Include="Models\Manage\WorksModels\WorksListDataModel.cs" />
+    <Compile Include="Models\Manage\WorksModels\WorksListFilterModel.cs" />
+    <Compile Include="Models\Manage\WorksModels\WorksListResultModel.cs" />
+    <Compile Include="Models\Manage\WorksModels\WorksListViewModel.cs" />
     <Compile Include="Models\PaginationResult.cs" />
     <Compile Include="Models\UserInfo\LoginUserInfoModel.cs" />
     <Compile Include="Models\UserInfo\SignInModel.cs" />
     <Compile Include="Models\WebUser.Controller.cs" />
     <Compile Include="Modules\FontEnd\FontEndModule.cs" />
+    <Compile Include="Modules\Manage\AgentModule.cs" />
     <Compile Include="Modules\Manage\DBService.cs" />
     <Compile Include="Modules\Manage\ImgModule.cs" />
     <Compile Include="Modules\Manage\NewsModule.cs" />
     <Compile Include="Modules\Manage\ProductModule.cs" />
     <Compile Include="Modules\Manage\ProductKindModule.cs" />
     <Compile Include="Modules\Manage\SignInModule.cs" />
+    <Compile Include="Modules\Manage\WorksModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\UserProvider.cs" />
     <Compile Include="Repositories\ImageRepository.cs" />
@@ -1564,6 +1568,9 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Products\List.cshtml" />
     <Content Include="Views\Products\Content.cshtml" />
+    <Content Include="Views\_SysAdm\_WorksDataPartial.cshtml" />
+    <Content Include="Views\_SysAdm\WorksDataAdd.cshtml" />
+    <Content Include="Views\_SysAdm\WorksDataEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1651,7 +1658,6 @@
     <Content Include="Views\News\Content.cshtml" />
     <Content Include="Views\Works\Content.cshtml" />
     <Content Include="Views\_SysAdm\WorksList.cshtml" />
-    <Content Include="Views\_SysAdm\WorksData.cshtml" />
     <Content Include="Views\_SysAdm\Agents.cshtml" />
     <Content Include="Views\Agents\Agents.cshtml" />
   </ItemGroup>
