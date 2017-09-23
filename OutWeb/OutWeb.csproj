@@ -166,13 +166,11 @@
     <Compile Include="Controllers\ImgHandlerController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\WorksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\_SysAdmController.cs" />
-    <Compile Include="Entities\WBAGENT.cs">
-      <DependentUpon>WBDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\WBDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,9 +204,6 @@
     <Compile Include="Entities\WBUSR.cs">
       <DependentUpon>WBDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\WBWORKS.cs">
-      <DependentUpon>WBDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Enums\ManageEnums.cs" />
     <Compile Include="Enums\ModelInitProperty.cs" />
     <Compile Include="Exceptions\ProductKindRelationExcption.cs" />
@@ -224,19 +219,22 @@
     <Compile Include="Models\FrontEnd\ProductFrontEndModels\ProductFrontEndDetalisDataModel.cs" />
     <Compile Include="Models\FrontEnd\ProductFrontEndModels\ProductFrontEndListDataModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
-    <Compile Include="Models\Manage\AgentModels\AgentDataModel.cs" />
-    <Compile Include="Models\Manage\ImgModels\ImageModel.cs" />
     <Compile Include="Models\Manage\ImgModels\ImagesModel.cs" />
+    <Compile Include="Models\Manage\ManageBannerModels\BannerDetailsDataModel.cs" />
+    <Compile Include="Models\Manage\ManageBannerModels\BannerListDataModel.cs" />
+    <Compile Include="Models\Manage\ManageBannerModels\BannerListFilterModel.cs" />
+    <Compile Include="Models\Manage\ManageBannerModels\BannerListResultModel.cs" />
+    <Compile Include="Models\Manage\ManageBannerModels\BannerListViewModel.cs" />
+    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackDetailsDataModel.cs" />
+    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListDataModel.cs" />
+    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListFilterModel.cs" />
+    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListResultModel.cs" />
+    <Compile Include="Models\Manage\ManageFeedbackModels\FeedbackListViewModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsDetailsDataModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsListDataModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsListFilterModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsListResultModel.cs" />
     <Compile Include="Models\Manage\ManageNewsModels\NewsListViewModel.cs" />
-    <Compile Include="Models\Manage\WorksModels\WorksDetailsDataModel.cs" />
-    <Compile Include="Models\Manage\WorksModels\WorksListDataModel.cs" />
-    <Compile Include="Models\Manage\WorksModels\WorksListFilterModel.cs" />
-    <Compile Include="Models\Manage\WorksModels\WorksListResultModel.cs" />
-    <Compile Include="Models\Manage\WorksModels\WorksListViewModel.cs" />
     <Compile Include="Models\Manage\ProductModels\ProductDetailsDataModel.cs" />
     <Compile Include="Models\Manage\ProductModels\ProductListDataModel.cs" />
     <Compile Include="Models\Manage\ProductModels\ProductListFilterModel.cs" />
@@ -255,8 +253,6 @@
     <Compile Include="Modules\Manage\DBService.cs" />
     <Compile Include="Modules\Manage\ImgModule.cs" />
     <Compile Include="Modules\Manage\NewsModule.cs" />
-    <Compile Include="Modules\Manage\AgentModule.cs" />
-    <Compile Include="Modules\Manage\WorksModule.cs" />
     <Compile Include="Modules\Manage\ProductModule.cs" />
     <Compile Include="Modules\Manage\ProductKindModule.cs" />
     <Compile Include="Modules\Manage\SignInModule.cs" />
@@ -1489,8 +1485,14 @@
     <Content Include="Content\css\vendor\swiper.min.css" />
     <Content Include="Content\css\vendor\typeahead.css" />
     <Content Include="Content\font\open-iconic\open-iconic.svg" />
+    <Content Include="Content\images\banner.jpg" />
     <Content Include="Content\images\index\banner.jpg" />
+    <Content Include="Content\images\logo-s.gif" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\pic-temp.jpg" />
+    <Content Include="Content\images\pic-temp2.jpg" />
+    <Content Include="Content\images\pic-temp3.jpg" />
+    <Content Include="Content\images\piclistBg.gif" />
     <Content Include="Content\js\jquery.waypoints.min.js" />
     <Content Include="Content\js\lightbox.min.js" />
     <Content Include="Content\js\swiper.min.js" />
@@ -1559,9 +1561,9 @@
     <Content Include="Views\_SysAdm\_ProductKindDataPartia.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindAdd.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindEdit.cshtml" />
-    <Content Include="Views\_SysAdm\_WorksDataPartial.cshtml" />
-    <Content Include="Views\_SysAdm\WorksDataAdd.cshtml" />
-    <Content Include="Views\_SysAdm\WorksDataEdit.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Products\List.cshtml" />
+    <Content Include="Views\Products\Content.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1649,6 +1651,7 @@
     <Content Include="Views\News\Content.cshtml" />
     <Content Include="Views\Works\Content.cshtml" />
     <Content Include="Views\_SysAdm\WorksList.cshtml" />
+    <Content Include="Views\_SysAdm\WorksData.cshtml" />
     <Content Include="Views\_SysAdm\Agents.cshtml" />
     <Content Include="Views\Agents\Agents.cshtml" />
   </ItemGroup>

@@ -3,21 +3,8 @@
 }
 
 @section css {
-    <link rel="stylesheet" href="~/Content/css/vendor/swiper.min.css">
 }
 @section scripts {
-    <script src="~/Content/js/swiper.min.js"></script>
-    <script>
-        var swiperBanner = new Swiper(document.getElementById('banner'), {
-            pagination: '.swiper-pager',
-            paginationClickable: true,
-            autoplay: 5000,
-            autoplayDisableOnInteraction: false,
-            speed: 1000,
-            // grabCursor: true,
-            effect: 'fade'
-        });
-    </script>
 }
 
 <section id="banner" class="swiper-container">
@@ -25,52 +12,62 @@
         <div class="swiper-slide" style="background-image: url(/Content/images/index/banner.jpg);"></div>
     </main>
     <article class="card">
-        <header class="underline">
-            <small class="block text-right">懷特博</small>
+        <header class="underline font-sp b">
+            <small class="block text-right font-xxl mb-8">懷特博</small>
             White Board
         </header>
         <main class="b">
-            一向秉持最專業及誠信負責的態度來
-            服務每一位客戶，
-            從原料製程、成品製程、產品製程，
-            皆有專人監督，品質有保障，
+            一向秉持最專業及誠信負責的態度來<br>
+            服務每一位客戶，<br>
+            從原料製程、成品製程、產品製程，<br>
+            皆有專人監督，品質有保障，<br>
             直接銷售服務更迅速
         </main>
-        <footer class="font-sp">White Board Industrial LTD., Co.</footer>
+        <footer class="font-sp font-tiny">White Board Industrial LTD., Co.</footer>
     </article>
 </section>
 
 <section class="news wrap">
-    <h3 class="underline">消息報報</h3>
-    <div class="row row-x0">
-        <figure class="col-4 m-0">
-            <img src="~/Content/images/news-temp.jpg" alt="最新消息列表圖">
-            <a href="~/News/Content"></a>
-            <figcaption>
-                <h4>磁吸白板貼</h4>
-                <a href="~/News/Content">more</a>
-            </figcaption>
-        </figure>
+    <h3 class="title"><span class="underline">消息報報</span></h3>
 
-        <figure class="col-4 m-0">
-            <img src="~/Content/images/news-temp.jpg" alt="最新消息列表圖">
-            <a href="~/News/Content"></a>
-            <figcaption>
-                <h4>白板貼</h4>
-                <a href="~/News/Content">more</a>
-            </figcaption>
-        </figure>
+    @* 套程式 - 最多3則 *@
+    <figure class="piclist">
+        <div class="cut">
+            <img src="~/Content/images/pic-temp.jpg" alt="最新消息列表圖">
+        </div>
+        <a href="~/News/Content"></a>
+        <figcaption>
+            <h4>磁吸白板貼可以怎麼玩？</h4>
+            <a href="~/News/Content" class="more">more</a>
+            <small class="date">2017/09/21</small>
+        </figcaption>
+    </figure>
 
-        <figure class="col-4 m-0">
-            <img src="~/Content/images/news-temp.jpg" alt="最新消息列表圖">
-            <a href="~/News/Content"></a>
-            <figcaption>
-                <h4>木框黑板</h4>
-                <a href="~/News/Content">more</a>
-            </figcaption>
-        </figure>
-    </div>
-    <footer class="text-right">
-        <a href="~/News" class="news-more">more <i class="align-middle font-xxl">&#9656;</i></a>
+    <figure class="piclist">
+        <div class="cut">
+            <img src="~/Content/images/pic-temp2.jpg" alt="最新消息列表圖">
+        </div>
+        <a href="~/News/Content"></a>
+        <figcaption>
+            <h4>辦公白板貼好好用辦公白板貼好好用辦公白板貼好好用辦公白板貼好好用辦公白板貼好好用</h4>
+            <a href="~/News/Content" class="more">more</a>
+            <small class="date">2017/09/21</small>
+        </figcaption>
+    </figure>
+
+    <figure class="piclist">
+        <div class="cut">
+            <img src="~/Content/images/pic-temp3.jpg" alt="最新消息列表圖">
+        </div>
+        <a href="~/News/Content"></a>
+        <figcaption>
+            <h4>來吃包子~~</h4>
+            <a href="~/News/Content" class="more">more</a>
+            <small class="date">2017/09/21</small>
+        </figcaption>
+    </figure>
+
+    <footer class="text-right center">
+        <a href="~/News" class="news-more font-sp">more <i class="align-middle font-xxl">&#9656;</i></a>
     </footer>
 </section>

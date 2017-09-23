@@ -242,7 +242,7 @@ h6 {
   font-size: 17px;
   font-size: 1.0625rem; }
 
-b, strong {
+b, strong, .b, .strong {
   font-weight: bold; }
 
 small {
@@ -515,35 +515,31 @@ output {
 -----------------------------------------------------------------------*/
 .wrap {
   max-width: 1400px;
-  margin: 0 auto; }
-  .wrap::after, .btn-group::after, .field::after, .clearfix::after, .team-nav::after {
-    content: "";
-    display: table;
-    clear: both; }
+  margin: 0 auto;
+  min-width: 1200px; }
   @media (max-width: 87.5em) {
     .wrap {
       padding: 0 32px;
       padding: 0 2rem; } }
-  @media (max-width: 35.5em) {
-    .wrap {
-      padding: 0 24px;
-      padding: 0 1.5rem; } }
 
 #wrapper {
+  min-width: 1200px;
   min-height: 100%;
   padding-bottom: 174px;
-  padding-top: 68px; }
+  padding-top: 85px; }
 
 #header {
-  background: #1A1A1A;
-  height: 68px;
   z-index: 6;
   position: fixed;
   top: 0;
   left: 0;
-  -webkit-transition: height 0.35s;
-  transition: height 0.35s;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
   width: 100%; }
+  .scrolled #header {
+    background-color: rgba(255, 255, 255, 0.85); }
+    .scrolled #header:hover {
+      background-color: #fff; }
 
 .logo {
   cursor: pointer;
@@ -552,6 +548,8 @@ output {
   background: url(../images/logo.png) 0 0 no-repeat;
   width: 100px;
   height: 49px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   float: left;
   margin-top: 20px; }
   .logo, .text-hide {
@@ -560,6 +558,9 @@ output {
     text-shadow: none;
     background-color: transparent;
     border: 0; }
+  .scrolled .logo {
+    background-size: contain;
+    height: 44px; }
 
 #footer {
   background: #c4c4c4;
@@ -577,6 +578,9 @@ output {
   .foot-nav a:hover, .foot-nav a:active, .foot-nav a.current {
     color: #54575a; }
 
+.copyright {
+  margin-top: -2px; }
+
 .js-mobile-body {
   overflow-y: hidden; }
 
@@ -584,11 +588,13 @@ output {
   z-index: 20;
   float: right;
   margin-top: 26px; }
+  .scrolled #menu {
+    margin-top: 0; }
   #menu a {
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     font-size: 18px;
     font-size: 1.125rem; }
     #menu a:not(.fb-link)::after {
@@ -602,7 +608,7 @@ output {
       bottom: 0;
       width: 0;
       opacity: 0;
-      border-top: 3px solid #fff; }
+      border-top: 3px solid #54575a; }
       #menu a:not(.fb-link)::after {
         content: '';
         display: block; }
@@ -621,7 +627,7 @@ svg {
   color: #fff;
   fill: #fff; }
   .fb-link:hover {
-    background-color: #3B579D; }
+    background-color: #000; }
 
 .btn {
   display: inline-block;
@@ -664,6 +670,10 @@ svg {
   .btn.white:hover, .btn.white:active, .btn.white.active {
     background: #141414; }
 
+.btn-group::after, .field::after, .clearfix::after {
+  content: "";
+  display: table;
+  clear: both; }
 .btn-group > .btn {
   float: left; }
   .btn-group > .btn:not(:first-child) {
@@ -788,11 +798,11 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   display: block;
   margin: auto; }
 
-.mx-a {
+.center {
   margin-right: auto;
   margin-left: auto; }
 
-.m-0, .team-board h6 {
+.m-0 {
   margin: 0; }
 
 .mt-0 {
@@ -801,7 +811,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .mr-0 {
   margin-right: 0; }
 
-.mb-0, .field, .team-board .grid {
+.mb-0, .scrolled .logo, .field {
   margin-bottom: 0; }
 
 .ml-0 {
@@ -847,7 +857,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .mr-4 {
   margin-right: 0.25rem; }
 
-.mb-4, .team-nav .tab-nav:not(.active) {
+.mb-4 {
   margin-bottom: 0.25rem; }
 
 .ml-4, .breadcrumb li:not(:last-child)::after {
@@ -864,13 +874,13 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .m-8 {
   margin: 0.5rem; }
 
-.mt-8, .champion h3 {
+.mt-8, .scrolled .logo {
   margin-top: 0.5rem; }
 
 .mr-8, .breadcrumb li:not(:last-child) {
   margin-right: 0.5rem; }
 
-.mb-8, .team-board .average h6, .champion header, .player-list h6 {
+.mb-8 {
   margin-bottom: 0.5rem; }
 
 .ml-8 {
@@ -887,10 +897,10 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .m-12 {
   margin: 0.75rem; }
 
-.mt-12, .player-list h6 {
+.mt-12 {
   margin-top: 0.75rem; }
 
-.mr-12, .team-list img, .team-board .scoring h6 {
+.mr-12 {
   margin-right: 0.75rem; }
 
 .mb-12 {
@@ -899,7 +909,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .ml-12, .fb-link {
   margin-left: 0.75rem; }
 
-.mx-12 {
+.mx-12, #menu a:not(.fb-link) {
   margin-right: 0.75rem;
   margin-left: 0.75rem; }
 
@@ -922,7 +932,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .ml-16 {
   margin-left: 1rem; }
 
-.mx-16, #menu a:not(.fb-link), .tabs a {
+.mx-16, .tabs a {
   margin-right: 1rem;
   margin-left: 1rem; }
 
@@ -936,7 +946,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .mt-24 {
   margin-top: 1.5rem; }
 
-.mr-24, .team-head .team-logo, .team-head .none {
+.mr-24 {
   margin-right: 1.5rem; }
 
 .mb-24 {
@@ -962,7 +972,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .mr-32 {
   margin-right: 2rem; }
 
-.mb-32, .player-list {
+.mb-32 {
   margin-bottom: 2rem; }
 
 .ml-32 {
@@ -1028,7 +1038,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .pt-0 {
   padding-top: 0; }
 
-.pr-0, input[type='number'], .team-list dt {
+.pr-0, input[type='number'] {
   padding-right: 0; }
 
 .pb-0 {
@@ -1077,7 +1087,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .pr-4 {
   padding-right: 0.25rem; }
 
-.pb-4 {
+.pb-4, .title .underline {
   padding-bottom: 0.25rem; }
 
 .pl-4 {
@@ -1087,7 +1097,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   padding-right: 0.25rem;
   padding-left: 0.25rem; }
 
-.py-4, .btn.sm, .btn-toggle, .team-board .grid {
+.py-4, .btn.sm {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem; }
 
@@ -1110,26 +1120,26 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   padding-right: 0.5rem;
   padding-left: 0.5rem; }
 
-.py-8, .team-list dd, .team-list a, .team-nav .tab-nav.active {
+.py-8 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem; }
 
 .p-12 {
   padding: 0.75rem; }
 
-.pt-12, caption, .team-board .average, .team-board .ranking, .team-board .info, .champion dd {
+.pt-12, caption {
   padding-top: 0.75rem; }
 
 .pr-12 {
   padding-right: 0.75rem; }
 
-.pb-12, .player-list {
+.pb-12 {
   padding-bottom: 0.75rem; }
 
 .pl-12 {
   padding-left: 0.75rem; }
 
-.px-12, .btn.sm, .team-board .scoring strong {
+.px-12, .btn.sm, .title .underline {
   padding-right: 0.75rem;
   padding-left: 0.75rem; }
 
@@ -1140,7 +1150,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .p-16 {
   padding: 1rem; }
 
-.pt-16, .team-list dt {
+.pt-16 {
   padding-top: 1rem; }
 
 .pr-16 {
@@ -1152,7 +1162,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .pl-16 {
   padding-left: 1rem; }
 
-.px-16, caption, .btn-toggle {
+.px-16, caption {
   padding-right: 1rem;
   padding-left: 1rem; }
 
@@ -1175,7 +1185,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .pl-24 {
   padding-left: 1.5rem; }
 
-.px-24, .tabs a, .team-board .ranking {
+.px-24, .tabs a {
   padding-right: 1.5rem;
   padding-left: 1.5rem; }
 
@@ -1261,7 +1271,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .align-bottom {
   vertical-align: bottom; }
 
-.text-left, #footer, .team-list dd, .team-board .info, .item-team {
+.text-left, #footer {
   text-align: left; }
 
 .text-right, .field dt {
@@ -1270,30 +1280,30 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .text-center {
   text-align: center; }
 
-.font-sp, .champion strong {
+.font-sp {
   font-family: "Open Sans", sans-serif; }
 
-.font-tiny, .team-board .scoring ul {
+.font-tiny {
   font-size: 13;
   font-size: 0.8125rem; }
 
-.font-sm, [class^="label"], .team-board h6, .player-list p {
+.font-sm, [class^="label"] {
   font-size: 14;
   font-size: 0.875rem; }
 
-.font-md, th, td, #footer, .btn.sm, .table-bg-gray th, .table-bg-gray td, .breadcrumb {
+.font-md, th, td, #footer, .btn.sm, .breadcrumb {
   font-size: 15;
   font-size: 0.9375rem; }
 
-.font-lg, .btn.lg, .champion span {
+.font-lg, .btn.lg {
   font-size: 18;
   font-size: 1.125rem; }
 
-.font-xl, caption, .tabs a, .team-board .average li, .champion dt {
+.font-xl, caption, .tabs a {
   font-size: 24;
   font-size: 1.5rem; }
 
-.font-xxl, .none::before, .team-board .scoring strong {
+.font-xxl {
   font-size: 32;
   font-size: 2rem; }
 
@@ -1305,16 +1315,16 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   font-size: 64;
   font-size: 4rem; }
 
-.text-white, tr:not(.head-line) th, .btn.white:hover, .btn.white:active, .btn.white.active, [class*="label-"], .goTop, .goTop:hover, .goTop:active, .team-board, .champion dt {
+.text-white, tr:not(.head-line) th, .btn.white:hover, .btn.white:active, .btn.white.active, [class*="label-"], .goTop, .goTop:hover, .goTop:active {
   color: #fff; }
 
-.bg-white, .btn.white, .team-board .scoring strong {
+.bg-white, .btn.white {
   background-color: #fff; }
 
 .bg-black {
   background-color: #000; }
 
-.text-primary, #menu a, .btn.white, .field .btn, .btn-toggle, .breadcrumb, .team-board .scoring strong, .team-nav .tab-nav:not(.active) {
+.text-primary, #menu a, .btn.white, .field .btn, .breadcrumb {
   color: #000; }
 
 .bg-primary, tr:not(.head-line) th {
@@ -1325,7 +1335,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   .hover-primary:hover, .hover-primary:active {
     color: black; }
 
-.text-secondary, .team-list.south h2 {
+.text-secondary {
   color: #54575a; }
 
 .bg-secondary, .fb-link {
@@ -1339,7 +1349,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .text-muted {
   color: #E3E3E4; }
 
-.bg-muted, .btn-toggle, .team-nav .tab-nav:not(.active) {
+.bg-muted {
   background-color: #E3E3E4; }
 
 .hover-muted {
@@ -1347,7 +1357,7 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   .hover-muted:hover, .hover-muted:active {
     color: #bcbcbe; }
 
-.text-success, .team-list.north h2 {
+.text-success {
   color: #88C200; }
 
 .bg-success {
@@ -1369,10 +1379,10 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   .hover-info:hover, .hover-info:active {
     color: #005e64; }
 
-.text-warning, .sortable th:not(.sorttable_nosort):hover {
+.text-warning {
   color: #FCE05B; }
 
-.bg-warning, .player-list:hover {
+.bg-warning {
   background-color: #FCE05B; }
 
 .hover-warning {
@@ -1432,31 +1442,18 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
 .underline {
   border-bottom: 1px solid; }
 
-.btn-toggle {
-  font-size: 17;
-  font-size: 1.0625rem;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
-  float: left;
-  box-shadow: inset 3px 3px 10px rgba(0, 0, 0, 0.3); }
-  .btn-toggle:first-child {
-    border-radius: 4px 0 0 4px; }
-  .btn-toggle:last-child {
-    border-radius: 0 4px 4px 0; }
-  .btn-toggle:hover, .btn-toggle:active {
-    background-color: #fde883;
-    box-shadow: none; }
-  .btn-toggle.active {
-    box-shadow: none;
-    background-color: #54575a; }
+.title {
+  font-weight: bold; }
+  .title .underline {
+    border-width: 3px; }
 
-.bg-teal {
-  background-color: #29A867; }
+#banner {
+  width: 100%;
+  height: 356px; }
 
-.table-bg-gray {
-  border-bottom: none; }
-  .table-bg-gray td {
-    background-color: #f5f5f6; }
+.swiper-slide {
+  background-position: center 0;
+  background-repeat: no-repeat; }
 
 .breadcrumb {
   line-height: 1.4;
@@ -1488,191 +1485,3 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
       border-color: #000; }
     .tabs a.active {
       border-color: #E96520; }
-
-.card {
-  border: 1px solid #ededee; }
-
-.none {
-  background-color: #f8f8f8;
-  border: 1px solid #ededee;
-  color: #E3E3E4; }
-  .none::before {
-    top: 50% !important;
-    -ms-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%); }
-
-.team-list h2 {
-  font-size: 58px;
-  font-size: 3.625rem;
-  letter-spacing: 4px; }
-.team-list dl {
-  border-left: 4px solid; }
-  .team-list dl:nth-of-type(odd) {
-    background-color: #ededee; }
-  .team-list dl:nth-of-type(even) {
-    background-color: #f5f5f6; }
-.team-list dt {
-  color: #496061; }
-.team-list a {
-  line-height: 1.25;
-  display: block;
-  float: left;
-  width: 48%;
-  font-size: 17px;
-  font-size: 1.0625rem; }
-  .team-list a:nth-of-type(odd) {
-    margin-right: 2%; }
-  .team-list a:nth-last-child(n+2) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07); }
-  .team-list a:hover, .team-list a:active {
-    color: rgba(0, 0, 0, 0.75);
-    -ms-transform: translateX(10px);
-    -webkit-transform: translateX(10px);
-    transform: translateX(10px); }
-.team-list img {
-  max-width: 64px;
-  max-height: 64px; }
-.team-list.north dl {
-  border-color: #88C200; }
-  .team-list.north dl:hover, .team-list.north dl:active {
-    background-color: #e2f6b1; }
-.team-list.south dl {
-  border-color: #54575a; }
-  .team-list.south dl:hover, .team-list.south dl:active {
-    background-color: #b0b0b0; }
-
-.team-head {
-  background: #f9f9f9 url(../images/Team/headBg.gif) center 0 no-repeat;
-  height: 210px;
-  padding-top: 70px;
-  margin-top: -66px; }
-  .team-head .team-logo {
-    max-width: 90px;
-    max-height: 95px; }
-  .team-head .none {
-    width: 90px;
-    height: 95px;
-    background-color: #E3E3E4;
-    color: #fff; }
-  .team-head h1 {
-    color: #000; }
-  .team-head small {
-    color: #121212; }
-
-.team-board {
-  background-color: #0f0f0f; }
-  .team-board .grid {
-    float: left;
-    height: 86px; }
-    .team-board .grid:not(:last-child) {
-      border-left: 1px solid rgba(255, 255, 255, 0.12); }
-    .team-board .grid:nth-last-child(2) {
-      border-right: 1px solid rgba(255, 255, 255, 0.12); }
-    .team-board .grid:last-child {
-      float: right; }
-  .team-board .average {
-    width: 28%; }
-    .team-board .average li {
-      width: 33%;
-      margin-right: -4px; }
-      .team-board .average li:not(:last-child) {
-        border-right: 1px solid rgba(255, 255, 255, 0.06); }
-  .team-board .scoring {
-    padding: 10px 16px; }
-    .team-board .scoring h6 {
-      width: 20px;
-      -webkit-writing-mode: vertical-rl;
-      writing-mode: vertical-rl; }
-    .team-board .scoring strong {
-      display: block; }
-    .team-board .scoring ul {
-      background: url(../images/icon-dot2.png) center 10px no-repeat; }
-    .team-board .scoring li:first-child {
-      margin-right: 34px; }
-
-.champion dl {
-  margin-bottom: 0;
-  width: 19.2%;
-  float: left; }
-  .champion dl:not(:last-child) {
-    margin-right: 1%; }
-.champion dt {
-  width: 33%;
-  font-weight: normal;
-  vertical-align: middle; }
-.champion strong {
-  font-size: 52px;
-  font-size: 3.25rem; }
-.champion header {
-  font-size: 34px;
-  font-size: 2.125rem; }
-.champion span {
-  color: #837468; }
-
-figcaption {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden; }
-  figcaption::before, figcaption::after {
-    pointer-events: none; }
-
-figure {
-  position: relative;
-  overflow: hidden;
-  margin: 0; }
-  @media (max-width: 63.9375em) {
-    figure {
-      margin-bottom: 32px; } }
-  figure > a {
-    z-index: 1;
-    opacity: 0;
-    background: #fff;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0; }
-  figure img {
-    max-width: 100%; }
-
-.player-list {
-  width: 16%;
-  float: left;
-  -webkit-transition: 0.5s;
-  transition: 0.5s; }
-  .player-list:not(:nth-child(6n)) {
-    margin-right: 0.7%; }
-  .player-list .none {
-    width: 100%;
-    height: 160px; }
-  .player-list p {
-    line-height: 1.3;
-    color: #666; }
-
-.team-nav .tab-nav {
-  width: 49.5%; }
-  .team-nav .tab-nav:first-child {
-    float: left; }
-  .team-nav .tab-nav:last-child {
-    float: right; }
-  .team-nav .tab-nav:not(.active) {
-    border-radius: 2px; }
-  .team-nav .tab-nav.active {
-    border-radius: 2px 2px 0 0; }
-
-.sortable th:not(.sorttable_nosort) {
-  cursor: pointer;
-  -webkit-transition: 0.35s;
-  transition: 0.35s; }
-
-.item-showing {
-  width: 60px; }
-
-.item-ranking {
-  width: 45px; }
-
-.item-team {
-  min-width: 125px; }
-
-.item-total {
-  background-color: #fde98d; }
