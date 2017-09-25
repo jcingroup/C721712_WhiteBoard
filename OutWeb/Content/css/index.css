@@ -443,7 +443,7 @@ svg {
   transition: background .35s, color .5s;
   letter-spacing: 1px; }
   .btn:hover, .btn:active, .btn:focus, .btn.active {
-    background: black;
+    background: #54575a;
     color: #fff; }
   .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
     cursor: not-allowed;
@@ -476,7 +476,11 @@ figcaption {
 
 figure {
   position: relative;
-  cursor: pointer; }
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in; }
   figure > a {
     z-index: 1;
     opacity: 0;
@@ -487,66 +491,72 @@ figure {
     position: absolute;
     top: 0;
     left: 0; }
-
-.piclist {
-  display: inline-block;
-  vertical-align: top;
-  width: 31%;
-  height: 297px;
-  background: url(../images/piclistBg.gif?v2) 0 bottom repeat-x;
-  -webkit-transition: 0.35s;
-  transition: 0.35s;
-  margin: 0 0.3%; }
-  .piclist h4, .piclist .more {
-    position: absolute; }
-  .piclist .cut {
-    overflow: hidden;
-    height: 260px; }
-  .piclist img {
+  figure .cut {
+    position: relative;
+    overflow: hidden; }
+  figure img {
     -webkit-transition: 0.5s ease-in-out;
     transition: 0.5s ease-in-out;
-    width: 100%;
-    min-height: 100%; }
-  .piclist h4 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); }
+  figure h4 {
     -webkit-transition: 0.5s ease;
     transition: 0.5s ease;
-    width: 100%;
-    left: 2%;
-    width: 96%;
-    bottom: 47px; }
-    .piclist h4 {
+    width: 100%; }
+    figure h4 {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
-  .piclist .more {
+  figure .more {
     -webkit-transition: 0.7s;
     transition: 0.7s;
+    position: absolute;
+    right: 0;
+    left: 0;
     letter-spacing: .1em;
     opacity: 0;
-    left: 0;
-    right: 0;
-    top: 90px;
+    top: 110px;
     z-index: 2; }
-    .piclist .more:hover, .piclist .more:active {
+    figure .more:hover, figure .more:active {
       color: #FCE05B; }
-  .piclist .date {
-    display: block;
-    letter-spacing: .2em;
-    color: #333333; }
-  .piclist:hover {
-    background-color: rgba(0, 0, 0, 0.8); }
-    .piclist:hover img {
+  figure:hover {
+    background-color: rgba(0, 0, 0, 0.55); }
+    figure:hover img {
+      z-index: -1;
       -webkit-filter: saturate(2) blur(3px);
-      filter: saturate(2) blur(3px);
-      opacity: .45; }
-    .piclist:hover h4 {
-      -ms-transform: translateY(-130px);
-      -webkit-transform: translateY(-130px);
-      transform: translateY(-130px);
-      border-bottom: 1px solid; }
-    .piclist:hover .more {
-      opacity: 1;
-      top: 125px; }
+      filter: saturate(2) blur(3px); }
+
+.newslist {
+  width: 31%;
+  height: 297px;
+  margin: 0 0.3%;
+  background: url(../images/piclistBg.gif?v2) 0 bottom repeat-x; }
+  .newslist .cut {
+    height: 260px; }
+  .newslist img {
+    min-width: 100%;
+    min-height: 100%; }
+  .newslist h4 {
+    position: absolute;
+    left: 2%;
+    width: 96%;
+    bottom: 47px; }
+  .newslist .date {
+    color: #333333;
+    display: block;
+    letter-spacing: .2em; }
+  .newslist:hover h4 {
+    -ms-transform: translateY(-130px);
+    -webkit-transform: translateY(-130px);
+    transform: translateY(-130px);
+    border-bottom: 1px solid; }
+  .newslist:hover .more {
+    opacity: 1;
+    top: 125px; }
 
 .clearfix::after {
   content: "";
@@ -595,16 +605,16 @@ figure {
   margin-right: auto;
   margin-left: auto; }
 
-.m-0, .piclist h4 {
+.m-0 {
   margin: 0; }
 
-.mt-0 {
+.mt-0, figure h4 {
   margin-top: 0; }
 
 .mr-0 {
   margin-right: 0; }
 
-.mb-0, .scrolled .logo {
+.mb-0, .scrolled .logo, .newslist h4 {
   margin-bottom: 0; }
 
 .ml-0 {
@@ -667,7 +677,7 @@ figure {
 .m-8 {
   margin: 0.5rem; }
 
-.mt-8, .scrolled .logo, .piclist .date {
+.mt-8, .scrolled .logo, .newslist .date {
   margin-top: 0.5rem; }
 
 .mr-8 {
@@ -913,7 +923,7 @@ figure {
   padding-right: 0.5rem;
   padding-left: 0.5rem; }
 
-.py-8, .piclist h4 {
+.py-8, .btn.lg, .newslist h4 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem; }
 
@@ -929,14 +939,14 @@ figure {
 .pb-12 {
   padding-bottom: 0.75rem; }
 
-.pl-12, .piclist .date {
+.pl-12, .newslist .date {
   padding-left: 0.75rem; }
 
 .px-12, .btn.sm, .title .underline {
   padding-right: 0.75rem;
   padding-left: 0.75rem; }
 
-.py-12, .btn.lg {
+.py-12 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem; }
 
@@ -1064,7 +1074,7 @@ figure {
 .align-bottom {
   vertical-align: bottom; }
 
-.text-left, #footer, .piclist .date, .card {
+.text-left, #footer, .newslist .date, .card {
   text-align: left; }
 
 .text-right {
@@ -1108,7 +1118,7 @@ figure {
   font-size: 64;
   font-size: 4rem; }
 
-.text-white, .btn.white:hover, .btn.white:active, .btn.white.active, .piclist h4, .piclist .more, .goTop, .goTop:hover, .goTop:active {
+.text-white, .btn.white:hover, .btn.white:active, .btn.white.active, figure .more, .newslist h4, .goTop, .goTop:hover, .goTop:active {
   color: #fff; }
 
 .bg-white, .btn.white {

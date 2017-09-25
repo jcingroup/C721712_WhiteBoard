@@ -5,3 +5,75 @@
 }
 
 <h1 class="title"><span class="underline">@ViewBag.Title</span></h1>
+
+<div class="wrap row">
+    <aside class="col-5 product-img">
+        <section class="swiper-container gallery">
+            <main class="swiper-wrapper">
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp2.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp3.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp2.jpg" alt="產品大圖"></div>
+            </main>
+            <div class="swiper-button-next swiper-button-white"></div>
+            <div class="swiper-button-prev swiper-button-white"></div>
+        </section>
+        <section class="swiper-container thumbs">
+            <main class="swiper-wrapper">
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp2.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp3.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp.jpg" alt="產品大圖"></div>
+                <div class="swiper-slide"><img src="~/Content/images/pic-temp2.jpg" alt="產品大圖"></div>
+            </main>
+        </section>
+    </aside>
+
+    <article class="col-7 product-intro pl-32 text-left">
+        <h3 class="mt-16 mb-32">綠板系列</h3>
+        <dl class="field">
+            <dt class="col-1">型號</dt>
+            <dd class="col-11">AAA</dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-1">規格</dt>
+            <dd class="col-11">30x45</dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-1">材質</dt>
+            <dd class="col-11">普通黑板</dd>
+        </dl>
+        <dl class="field">
+            <dt class="col-1">特色</dt>
+            <dd class="col-11">
+                黑白板是招牌壓克力板應用的一種。黑白板白天時會呈現黑色，晚上時則會呈現白色，譬如中國工商銀行的招牌。在夜間時，黑白板使得招牌變得更明亮，容易吸引路人的注意力。此系列還有藍白板及紅白板。
+            </dd>
+        </dl>
+    </article>
+</div>
+
+@* 下面是編輯器內容，有資料的話才顯示
+<div class="wrap clearfix editor text-left">
+    資料在這
+</div>
+*@
+
+@section scripts {
+    <script>
+        var gallery = new Swiper('.gallery', {
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            spaceBetween: 10,
+        });
+        var thumbs = new Swiper('.thumbs', {
+            spaceBetween: 10,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            touchRatio: 0.2,
+            slideToClickedSlide: true
+        });
+        gallery.params.control = thumbs;
+        thumbs.params.control = gallery;
+   </script>
+}
