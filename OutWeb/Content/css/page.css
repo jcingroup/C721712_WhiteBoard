@@ -1443,13 +1443,20 @@ a.label-danger:hover, a.label-danger:focus, a.label-danger:active {
   border-bottom: 1px solid; }
 
 .title {
+  font-weight: bold;
+  font-size: 28;
+  font-size: 1.75rem;
   font-weight: bold; }
   .title .underline {
-    border-width: 3px; }
+    border-width: 3px;
+    border-color: #e6e6e7; }
 
 #banner {
   width: 100%;
-  height: 356px; }
+  height: 356px;
+  background: #e6e6e7 url(../images/bannerBg.gif) center 0 no-repeat;
+  background-size: cover;
+  margin-bottom: 36px; }
 
 .swiper-slide {
   background-position: center 0;
