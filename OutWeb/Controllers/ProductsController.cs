@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OutWeb.Models.FrontEnd.ProductFrontEndModels;
+using OutWeb.Modules.FontEnd;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,8 @@ namespace OutWeb.Controllers
 {
     public class ProductsController : Controller
     {
+        FontEndModule m_module = new FontEndModule();
+        FontEndModule Module { get { return this.m_module; } set { this.m_module = value; } }
         // GET: Products
         public ProductsController()
         {
@@ -16,20 +20,24 @@ namespace OutWeb.Controllers
 
         public ActionResult Index()
         {
-            return View("List");
+            return RedirectToAction("List");
         }
 
-        // 套程式-產品介紹
+        // 套程式-最新消息
         // 列表
         public ActionResult List()
         {
-            return View();
+            List<ProductFrontEndDataModel> model = this.Module.GetProductListFrontEnd();
+            return View(model);
         }
 
         // 內容
-        public ActionResult Content()
+        public ActionResult Content(int? ID)
         {
-            return View();
+            if (ID == null)
+                return RedirectToAction("List");
+            ProductFrontEndDataModel model = this.Module.GetProductByIDFrontEnd((int)ID);
+            return View(model);
         }
     }
 }

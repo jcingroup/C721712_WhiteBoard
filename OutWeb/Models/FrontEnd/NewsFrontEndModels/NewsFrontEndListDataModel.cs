@@ -1,4 +1,5 @@
-﻿using OutWeb.Repositories;
+﻿using OutWeb.Models.Manage.ImgModels;
+using OutWeb.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -18,6 +19,9 @@ namespace OutWeb.Models.FrontEnd.NewsFrontEndModels
 
     public class NewsFrontEndDataModel
     {
+        MemberViewModel m_imagesData = new MemberViewModel();
+        public MemberViewModel ImagesData { get { return this.m_imagesData; } set { this.m_imagesData = value; } }
+
         /// <summary>
         /// 內文字數
         /// </summary>
@@ -82,19 +86,9 @@ namespace OutWeb.Models.FrontEnd.NewsFrontEndModels
         /// <summary>
         /// 發布日期
         /// </summary>
-        public DateTime? PublishDate { get; set; }
-
-        /// <summary>
-        /// 發布日期字串
-        /// </summary>
         public string PublishDateStr
-        {
-            get
-            {
-                DateTime d = (DateTime)this.PublishDate;
-                return d.ConvertDateTimeTo10CodeString();
-            }
-        }
+        { get; set; }
+
 
         private string m_Content = string.Empty;
 
@@ -105,11 +99,9 @@ namespace OutWeb.Models.FrontEnd.NewsFrontEndModels
         {
             get
             {
-                int iWordLength = this.WordLength ?? this.m_Content.Length;
                 string result = string.Empty;
                 string htmlTagStr = Regex.Replace(this.m_Content, @"<[^>]+>|&nbsp;|&ldquo;|&rdquo;", "").Trim();
-                result = htmlTagStr.Length >= iWordLength ? htmlTagStr.Substring(0, iWordLength) : htmlTagStr;
-                return result;
+                return htmlTagStr;
             }
             set
             {

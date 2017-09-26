@@ -1,4 +1,7 @@
-﻿using System;
+﻿using OutWeb.Enums;
+using OutWeb.Models.Manage.AgentModels;
+using OutWeb.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,13 +19,15 @@ namespace OutWeb.Controllers
 
         public ActionResult Index()
         {
-            return View("Agents");
+            return RedirectToAction("Agents");
         }
 
         // 套程式-代理商
         public ActionResult Agents()
         {
-            return View();
+            ListModuleService module = ListFactoryService.Create(ListMethodType.AGENT);
+            AgentDataModel model = (module.DoGetList<object>(null, Language.NotSet) as AgentDataModel);
+            return View(model);
         }
     }
 }

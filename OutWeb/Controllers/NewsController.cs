@@ -1,9 +1,14 @@
-﻿using System.Web.Mvc;
+﻿using OutWeb.Models.FrontEnd.NewsFrontEndModels;
+using OutWeb.Modules.FontEnd;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
     public class NewsController : Controller
     {
+        FontEndModule m_module = new FontEndModule();
+        FontEndModule Module { get { return this.m_module; } set { this.m_module = value; } }
         public NewsController()
         {
             ViewBag.IsFirstPage = false;
@@ -11,20 +16,24 @@ namespace OutWeb.Controllers
 
         public ActionResult Index()
         {
-            return View("List");
+            return RedirectToAction("List");
         }
 
         // 套程式-最新消息
         // 列表
         public ActionResult List()
         {
-            return View();
+            List<NewsFrontEndDataModel> model = this.Module.GetNewsListFrontEnd(0);
+            return View(model);
         }
 
         // 內容
-        public ActionResult Content()
+        public ActionResult Content(int? ID)
         {
-            return View();
+            if (ID == null)
+                return RedirectToAction("List");
+            NewsFrontEndDetalisDataModel model = this.Module.GetNewsByIDFrontEnd((int)ID);
+            return View(model);
         }
     }
 }

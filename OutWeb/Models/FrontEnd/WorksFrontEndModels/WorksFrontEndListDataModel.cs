@@ -4,20 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace OutWeb.Models.FrontEnd.ProductFrontEndModels
+namespace OutWeb.Models.FrontEnd.WorksFrontEndModels
 {
-    public class ProductFrontEndListDataModel : IPaginationModel
+    public class WorksFrontEndListDataModel : IPaginationModel
     {
-        private IEnumerable<ProductFrontEndDataModel> m_data;
+        private IEnumerable<WorksFrontEndDataModel> m_data;
 
-        public IEnumerable<ProductFrontEndDataModel> Data { get { return this.m_data; } set { this.m_data = value; } }
+        public IEnumerable<WorksFrontEndDataModel> Data { get { return this.m_data; } set { this.m_data = value; } }
         private PaginationResult m_pagination = new PaginationResult();
 
         public PaginationResult Pagination
         { get { return this.m_pagination; } set { this.m_pagination = value; } }
     }
 
-    public class ProductFrontEndDataModel
+    public class WorksFrontEndDataModel
     {
         private MemberViewModel m_representImage = new MemberViewModel();
         private List<MemberViewModel> m_otherImage = new List<MemberViewModel>();
@@ -35,42 +35,21 @@ namespace OutWeb.Models.FrontEnd.ProductFrontEndModels
         public int ID { get; set; }
 
         /// <summary>
-        /// 產品名稱
+        /// 發布日期
         /// </summary>
-        public string ProductName { get; set; }
+        public string WorksPulishDateStr { get; set; }
+
 
         /// <summary>
-        /// 產品型號
+        /// 案例標題
         /// </summary>
-        public string ProductType { get; set; }
-
-        /// <summary>
-        /// 產品規格
-        /// </summary>
-        public string ProductSpecification { get; set; }
-
-        /// <summary>
-        /// 產品材質
-        /// </summary>
-        public string ProductMaterial { get; set; }
-
-        /// <summary>
-        /// 產品特色
-        /// </summary>
-        public string ProductFeatures { get; set; }
-
-        /// <summary>
-        /// 所屬分類索引
-        /// </summary>
-        public int TypeID { get; set; }
-
+        public string WorksTitle { get; set; }
 
 
         /// <summary>
         /// 內容
         /// </summary>
         public string Content { get; set; }
-
 
         /// <summary>
         /// 前台顯示

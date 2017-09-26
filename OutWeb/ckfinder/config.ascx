@@ -194,7 +194,7 @@
         type = ResourceType.Add("Images");
         type.Url = BaseUrl + "images/";
         type.Dir = BaseDir == "" ? "" : BaseDir + "images/";
-        type.MaxSize = 2097152; //byte
+        type.MaxSize = 1048576; //byte 1mb
         type.AllowedExtensions = new string[] { "bmp", "gif", "jpeg", "jpg", "png" };
         type.DeniedExtensions = new string[] { };
 

@@ -254,7 +254,7 @@
     function postImages(elem) {
         var formData = new FormData();
         var mode = $(elem).attr('id');
-        var fileLimitSize = 2097152;//檔案大小2mb
+        var fileLimitSize = 1048576;//檔案大小1mb
         var ID = $('#hdnProductID').val();
         var totalFiles_s = document.getElementById('images_s');
         var totalFiles_m = document.getElementById('images_m');

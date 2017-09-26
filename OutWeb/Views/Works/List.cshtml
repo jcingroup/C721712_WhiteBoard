@@ -1,4 +1,5 @@
-﻿
+﻿@using OutWeb.Models.FrontEnd.WorksFrontEndModels
+@model List<WorksFrontEndDataModel>
 @{
     ViewBag.Title = "案例分享";
     ViewBag.BodyClass = "Works";
@@ -7,64 +8,21 @@
 <h1 class="title"><span class="underline">@ViewBag.Title</span></h1>
 
 <div class="wrap clearfix">
-    <figure class="newslist">
-        <div class="cut">
-            @* 寬度不超過450，高度不超過265 *@
-            <img src="~/Content/images/pic-temp.jpg" alt="案例分享列表圖">
-        </div>
-        <a href="~/Works/Content"></a>
-        <figcaption>
-            <h4>案例一</h4>
-            <a href="~/Works/Content" class="more">more</a>
-            <small class="date">2017/09/21</small>
-        </figcaption>
-    </figure>
+    @* 寬度不超過450，高度不超過265 *@
 
-    <figure class="newslist">
-        <div class="cut">
-            <img src="~/Content/images/pic-temp2.jpg" alt="案例分享列表圖">
-        </div>
-        <a href="~/Works/Content"></a>
-        <figcaption>
-            <h4>案例二</h4>
-            <a href="~/Works/Content" class="more">more</a>
-            <small class="date">2017/09/21</small>
+    @foreach (var data in Model)
+    {
+        <figure class="newslist">
+            <div class="cut">
+                <img src="~/@data.ImagesData.FileUrl" alt="案例分享列表圖">
+            </div>
+            <a href="@Url.Content("~/Works/Content?ID="+data.ID)"></a>
+            <figcaption>
+                <h4>@data.WorksTitle</h4>
+                <a href="@Url.Content("~/Works/Content?ID="+data.ID)" class="more">more</a>
+                <small class="date">@data.WorksPulishDateStr</small>
         </figcaption>
     </figure>
+    }
 
-    <figure class="newslist">
-        <div class="cut">
-            <img src="~/Content/images/pic-temp3.jpg" alt="案例分享列表圖">
-        </div>
-        <a href="~/Works/Content"></a>
-        <figcaption>
-            <h4>案例三</h4>
-            <a href="~/Works/Content" class="more">more</a>
-            <small class="date">2017/09/21</small>
-        </figcaption>
-    </figure>
-
-    <figure class="newslist">
-        <div class="cut">
-            <img src="~/Content/images/pic-temp3.jpg" alt="案例分享列表圖">
-        </div>
-        <a href="~/Works/Content"></a>
-        <figcaption>
-            <h4>案例三</h4>
-            <a href="~/Works/Content" class="more">more</a>
-            <small class="date">2017/09/21</small>
-        </figcaption>
-    </figure>
-
-    <figure class="newslist">
-        <div class="cut">
-            <img src="~/Content/images/pic-temp3.jpg" alt="案例分享列表圖">
-        </div>
-        <a href="~/Works/Content"></a>
-        <figcaption>
-            <h4>案例三</h4>
-            <a href="~/Works/Content" class="more">more</a>
-            <small class="date">2017/09/21</small>
-        </figcaption>
-    </figure>
 </div>

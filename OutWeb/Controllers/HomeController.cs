@@ -1,9 +1,19 @@
-﻿using System.Web.Mvc;
+﻿using OutWeb.Enums;
+using OutWeb.Models.FrontEnd.NewsFrontEndModels;
+using OutWeb.Models.Manage.ManageNewsModels;
+using OutWeb.Modules.FontEnd;
+using OutWeb.Modules.Manage;
+using OutWeb.Service;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
     public class HomeController : Controller
     {
+        FontEndModule m_module = new FontEndModule();
+        FontEndModule Module { get { return this.m_module; } set { this.m_module = value; } }
         public HomeController()
         {
             ViewBag.IsFirstPage = false;
@@ -13,7 +23,8 @@ namespace OutWeb.Controllers
         public ActionResult Index()
         {
             ViewBag.IsFirstPage = true;
-            return View();            
+            List<NewsFrontEndDataModel> model = this.Module.GetNewsListFrontEnd(3);
+            return View(model);
         }
 
         // 公司簡介

@@ -216,14 +216,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\FrontEnd\FeedbackFrontEndModels\FeedbackFrontEndDetalisDataModel.cs" />
-    <Compile Include="Models\FrontEnd\FeedbackFrontEndModels\FeedbackFrontEndListDataModel.cs" />
-    <Compile Include="Models\FrontEnd\HomePageModels\BannerModel.cs" />
-    <Compile Include="Models\FrontEnd\HomePageModels\HomePageListViewModel.cs" />
     <Compile Include="Models\FrontEnd\NewsFrontEndModels\NewsFrontEndDetalisDataModel.cs" />
     <Compile Include="Models\FrontEnd\NewsFrontEndModels\NewsFrontEndListDataModel.cs" />
-    <Compile Include="Models\FrontEnd\ProductFrontEndModels\ProductFrontEndDetalisDataModel.cs" />
     <Compile Include="Models\FrontEnd\ProductFrontEndModels\ProductFrontEndListDataModel.cs" />
+    <Compile Include="Models\FrontEnd\WorksFrontEndModels\WorksFrontEndListDataModel.cs" />
     <Compile Include="Models\IPaginationModel.cs" />
     <Compile Include="Models\Manage\AgentModels\AgentDataModel.cs" />
     <Compile Include="Models\Manage\ImgModels\ImagesModel.cs" />
@@ -1563,7 +1559,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\_SysAdm\NewsEdit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\_SysAdm\_ImagesUploadPartial.cshtml" />
     <Content Include="Views\_SysAdm\ProductDataEdit.cshtml" />
     <Content Include="Views\_SysAdm\_ProductKindDataPartia.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindAdd.cshtml" />

@@ -1,4 +1,5 @@
-﻿
+﻿@using OutWeb.Models.FrontEnd.NewsFrontEndModels
+@model NewsFrontEndDetalisDataModel
 @{
     ViewBag.Title = "消息報報";
     ViewBag.BodyClass = "News";
@@ -7,11 +8,11 @@
 <h1 class="title"><span class="underline">@ViewBag.Title</span></h1>
 
 <article class="wrap news-post text-left">
-    <span class="date">2017/09/25</span>
-    <header>最新消息標題</header>
+    <span class="date">@Model.PublishDateStr</span>
+    <header>@Model.Title</header>
 
     <main class="editor">
-        最新消息內容(編輯器)
+        @Html.Raw(Model.NewsContent)
     </main>
 
     <footer class="text-center mt-32">
