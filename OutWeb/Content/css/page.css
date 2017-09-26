@@ -750,8 +750,9 @@ figure {
 .newslist {
   width: 31%;
   height: 297px;
-  margin: 0 0.3%;
-  background: url(../images/piclistBg.gif?v2) 0 bottom repeat-x; }
+  background: url(../images/piclistBg.gif?v2) 0 bottom repeat-x;
+  margin: 24px 1.16%;
+  float: left; }
   .newslist .cut {
     height: 260px; }
   .newslist img {
@@ -766,14 +767,16 @@ figure {
     color: #333333;
     display: block;
     letter-spacing: .2em; }
-  .newslist:hover h4 {
-    -ms-transform: translateY(-130px);
-    -webkit-transform: translateY(-130px);
-    transform: translateY(-130px);
-    border-bottom: 1px solid; }
-  .newslist:hover .more {
-    opacity: 1;
-    top: 125px; }
+  .newslist:hover {
+    background-color: rgba(0, 0, 0, 0.55); }
+    .newslist:hover h4 {
+      -ms-transform: translateY(-130px);
+      -webkit-transform: translateY(-130px);
+      transform: translateY(-130px);
+      border-bottom: 1px solid; }
+    .newslist:hover .more {
+      opacity: 1;
+      top: 125px; }
 
 .piclist {
   width: 33.33333%;
@@ -796,15 +799,17 @@ figure {
     background-position: 0 -20px; }
   .piclist .more {
     background: url(../images/icon-view.png) center 0 no-repeat; }
-  .piclist:hover img {
-    opacity: .45; }
-  .piclist:hover h4 {
-    background-image: url(../images/piclistBg2.gif);
-    background-position: 0 0; }
-  .piclist:hover .more {
-    opacity: .7;
-    padding-top: 65px;
-    top: 90px; }
+  .piclist:hover {
+    background-color: rgba(0, 0, 0, 0.7); }
+    .piclist:hover img {
+      opacity: .45; }
+    .piclist:hover h4 {
+      background-image: url(../images/piclistBg2.gif);
+      background-position: 0 0; }
+    .piclist:hover .more {
+      opacity: .7;
+      padding-top: 65px;
+      top: 90px; }
 
 .sr-only {
   position: absolute;
@@ -844,7 +849,7 @@ figure {
   display: block;
   margin: auto; }
 
-.center, .product-img .swiper-container {
+.center, .product-img .swiper-container, .work-img .swiper-container {
   margin-right: auto;
   margin-left: auto; }
 
@@ -978,7 +983,7 @@ figure {
 .ml-16 {
   margin-left: 1rem; }
 
-.mx-16, .tabs a {
+.mx-16 {
   margin-right: 1rem;
   margin-left: 1rem; }
 
@@ -1021,7 +1026,7 @@ figure {
 .mb-32 {
   margin-bottom: 2rem; }
 
-.ml-32 {
+.ml-32, .text-list {
   margin-left: 2rem; }
 
 .mx-32 {
@@ -1035,7 +1040,7 @@ figure {
 .m-48 {
   margin: 3rem; }
 
-.mt-48, .tabs {
+.mt-48 {
   margin-top: 3rem; }
 
 .mr-48 {
@@ -1143,7 +1148,7 @@ figure {
   padding-right: 0.25rem;
   padding-left: 0.25rem; }
 
-.py-4, .btn.sm {
+.py-4, .btn.sm, .text-list li {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem; }
 
@@ -1231,7 +1236,7 @@ figure {
 .pl-24 {
   padding-left: 1.5rem; }
 
-.px-24, .tabs a {
+.px-24 {
   padding-right: 1.5rem;
   padding-left: 1.5rem; }
 
@@ -1345,7 +1350,7 @@ figure {
   font-size: 18;
   font-size: 1.125rem; }
 
-.font-xl, caption, .tabs a {
+.font-xl, caption {
   font-size: 24;
   font-size: 1.5rem; }
 
@@ -1517,37 +1522,15 @@ figure {
       content: "/";
       color: #E3E3E4; }
 
-.sidebar {
-  float: right;
-  width: 28%; }
-
-.content {
-  float: left;
-  width: 70%; }
-
-.tabs {
-  border-color: #E4D6A5;
-  margin-bottom: 42px; }
-  .tabs a {
-    display: inline-block;
-    border-bottom: 2px solid transparent;
-    position: relative;
-    bottom: -1px;
-    padding-bottom: 18px; }
-    .tabs a:hover, .tabs a:active {
-      border-color: #000; }
-    .tabs a.active {
-      border-color: #E96520; }
-
 .product-intro {
   font-size: 20;
   font-size: 1.25rem; }
 
-.product-img .swiper-container {
+.product-img .swiper-container, .work-img .swiper-container {
   width: 100%; }
-.product-img .swiper-slide {
+.product-img .swiper-slide, .work-img .swiper-slide {
   background-color: #e6e6e7; }
-.product-img img {
+.product-img img, .work-img img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1556,11 +1539,17 @@ figure {
   transform: translate(-50%, -50%); }
 
 .gallery {
-  height: 360px;
   width: 100%; }
   .gallery img {
-    max-width: 370px;
-    max-height: 250px; }
+    max-width: 80%; }
+  .product-img .gallery {
+    height: 360px; }
+    .product-img .gallery img {
+      max-height: 260px; }
+  .work-img .gallery {
+    height: 420px; }
+    .work-img .gallery img {
+      max-height: 320px; }
 
 .thumbs {
   height: 62px;
@@ -1583,3 +1572,12 @@ figure {
 .news-post header {
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9; }
+
+.map {
+  border-bottom: 3px solid #f8f8f8;
+  height: 480px; }
+
+.text-list {
+  list-style-type: circle; }
+  .text-list li {
+    border-bottom: 1px solid #f8f8f8; }

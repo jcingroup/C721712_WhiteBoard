@@ -1490,6 +1490,8 @@
     <Content Include="Content\css\vendor\typeahead.css" />
     <Content Include="Content\font\open-iconic\open-iconic.svg" />
     <Content Include="Content\images\banner.jpg" />
+    <Content Include="Content\images\bannerBg.gif" />
+    <Content Include="Content\images\icon-view.png" />
     <Content Include="Content\images\index\banner.jpg" />
     <Content Include="Content\images\logo-s.gif" />
     <Content Include="Content\images\logo.png" />
@@ -1497,6 +1499,7 @@
     <Content Include="Content\images\pic-temp2.jpg" />
     <Content Include="Content\images\pic-temp3.jpg" />
     <Content Include="Content\images\piclistBg.gif" />
+    <Content Include="Content\images\piclistBg2.gif" />
     <Content Include="Content\js\jquery.waypoints.min.js" />
     <Content Include="Content\js\lightbox.min.js" />
     <Content Include="Content\js\swiper.min.js" />

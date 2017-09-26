@@ -533,8 +533,8 @@ figure {
 .newslist {
   width: 31%;
   height: 297px;
-  margin: 0 0.3%;
-  background: url(../images/piclistBg.gif?v2) 0 bottom repeat-x; }
+  background: url(../images/piclistBg.gif?v2) 0 bottom repeat-x;
+  margin: 0 0.3%; }
   .newslist .cut {
     height: 260px; }
   .newslist img {
@@ -549,14 +549,16 @@ figure {
     color: #333333;
     display: block;
     letter-spacing: .2em; }
-  .newslist:hover h4 {
-    -ms-transform: translateY(-130px);
-    -webkit-transform: translateY(-130px);
-    transform: translateY(-130px);
-    border-bottom: 1px solid; }
-  .newslist:hover .more {
-    opacity: 1;
-    top: 125px; }
+  .newslist:hover {
+    background-color: rgba(0, 0, 0, 0.55); }
+    .newslist:hover h4 {
+      -ms-transform: translateY(-130px);
+      -webkit-transform: translateY(-130px);
+      transform: translateY(-130px);
+      border-bottom: 1px solid; }
+    .newslist:hover .more {
+      opacity: 1;
+      top: 125px; }
 
 .clearfix::after {
   content: "";
