@@ -145,9 +145,9 @@
           <EntitySet Name="WBNEWS" EntityType="WBDBModel.WBNEWS" />
           <EntitySet Name="WBPIC" EntityType="WBDBModel.WBPIC" />
           <EntitySet Name="WBPRODUCT" EntityType="WBDBModel.WBPRODUCT" />
-          <EntitySet Name="WBPRODUCTTYPE" EntityType="WBDBModel.WBPRODUCTTYPE" />
           <EntitySet Name="WBUSR" EntityType="WBDBModel.WBUSR" />
           <EntitySet Name="WBWORKS" EntityType="WBDBModel.WBWORKS" />
+          <EntitySet Name="WBPRODUCTTYPE" EntityType="WBDBModel.WBPRODUCTTYPE" />
         </EntityContainer>
         <EntityType Name="WBAGENT">
           <Key>
@@ -222,20 +222,6 @@
           <Property Name="PRD_MT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PRD_FEAT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="WBPRODUCTTYPE">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LANG_CD" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="PRD_TP_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SR_SQ" Type="Int32" Nullable="false" />
-          <Property Name="PRD_TP_ST" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
-          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UPD_USR_ID" Type="Int32" />
-          <Property Name="UPD_DT" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="WBUSR">
           <Key>
             <PropertyRef Name="ID" />
@@ -268,6 +254,20 @@
           <Property Name="DIS_FRONT_ST" Type="Boolean" Nullable="false" />
           <Property Name="SR_SQ" Type="Int32" Nullable="false" />
           <Property Name="PUB_DT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WBPRODUCTTYPE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LANG_CD" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PRD_TP_NM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SR_SQ" Type="Int32" Nullable="false" />
+          <Property Name="PRD_TP_ST" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_USR_ID" Type="Int32" />
+          <Property Name="UPD_DT" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -353,21 +353,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WBPRODUCTTYPE">
-            <EntityTypeMapping TypeName="WBDBModel.WBPRODUCTTYPE">
-              <MappingFragment StoreEntitySet="WBPRODUCTTYPE">
-                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
-                <ScalarProperty Name="UPD_USR_ID" ColumnName="UPD_USR_ID" />
-                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
-                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
-                <ScalarProperty Name="PRD_TP_ST" ColumnName="PRD_TP_ST" />
-                <ScalarProperty Name="SR_SQ" ColumnName="SR_SQ" />
-                <ScalarProperty Name="PRD_TP_NM" ColumnName="PRD_TP_NM" />
-                <ScalarProperty Name="LANG_CD" ColumnName="LANG_CD" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WBUSR">
             <EntityTypeMapping TypeName="WBDBModel.WBUSR">
               <MappingFragment StoreEntitySet="WBUSR">
@@ -399,6 +384,21 @@
                 <ScalarProperty Name="UPD_USRID" ColumnName="UPD_USRID" />
                 <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
                 <ScalarProperty Name="BUD_USRID" ColumnName="BUD_USRID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WBPRODUCTTYPE">
+            <EntityTypeMapping TypeName="WBDBModel.WBPRODUCTTYPE">
+              <MappingFragment StoreEntitySet="WBPRODUCTTYPE">
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="UPD_USR_ID" ColumnName="UPD_USR_ID" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="PRD_TP_ST" ColumnName="PRD_TP_ST" />
+                <ScalarProperty Name="SR_SQ" ColumnName="SR_SQ" />
+                <ScalarProperty Name="PRD_TP_NM" ColumnName="PRD_TP_NM" />
+                <ScalarProperty Name="LANG_CD" ColumnName="LANG_CD" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

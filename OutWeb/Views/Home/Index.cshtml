@@ -38,9 +38,11 @@
 
     @foreach (var data in Model)
     {
+        string imgUrl = data.ImagesData == null ?string.Empty: data.ImagesData.FileUrl;
+
         <figure class="newslist">
             <div class="cut">
-                <img src="~/@data.ImagesData.FileUrl" alt="最新消息列表圖">
+                <img src="~/@imgUrl" alt="最新消息列表圖">
             </div>
             <a href="@Url.Content("~/News/Content?ID="+data.ID)"></a>
             <figcaption>

@@ -62,8 +62,13 @@ namespace OutWeb.Models.FrontEnd.ProductFrontEndModels
         /// <summary>
         /// 所屬分類索引
         /// </summary>
-        public int TypeID { get; set; }
+        public int ProductKindID { get; set; }
 
+        
+        /// <summary>
+        /// 所屬分類名稱
+        /// </summary>
+        public string ProductKindName { get; set; }
 
 
         /// <summary>

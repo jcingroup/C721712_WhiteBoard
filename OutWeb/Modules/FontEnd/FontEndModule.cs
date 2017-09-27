@@ -170,7 +170,7 @@ namespace OutWeb.Modules.FontEnd
                 {
                     ID = s.ID,
                     ProductName = s.PRD_NM,
-                    TypeID = s.MAP_PRODUCT_TP_ID,
+                    ProductKindID = s.MAP_PRODUCT_TP_ID,
                     Sort = s.SR_SQ,
                     ProductType = s.PRD_TP,
                     ProductFeatures = s.PRD_FEAT.Replace("\r\n", "<br>"),
@@ -189,6 +189,8 @@ namespace OutWeb.Modules.FontEnd
 
                 foreach (var d in data)
                 {
+                    var kind = this.DB.WBPRODUCTTYPE.Where(o => o.ID == d.ProductKindID).FirstOrDefault();
+                    d.ProductKindName = kind == null ? "" : kind.PRD_TP_NM;
                     //取圖檔
                     ImgModule imgModule = new ImgModule();
                     d.ImagesData = imgModule.GetImages(d.ID, "Product", "S").FirstOrDefault();

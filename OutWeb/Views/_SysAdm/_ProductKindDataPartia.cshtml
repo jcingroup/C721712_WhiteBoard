@@ -74,18 +74,19 @@
             });
 
             //狀態
-            if ('@Model.Status' == '') {
-                $('#state_0').prop('checked', 'checked');
+            if ('@Model.ID' == '0') {
+                $('#state_0').prop('checked', true);
             }
             else {
-                var $radio = $('.c-choice');
-                $radio.each(function (i, elem) {
-                    if ($(elem).val() == '@Model.Status') {
-                        $(elem).prop('checked', 'checked');
-                        return;
-                    }
-                })
+                if ('@Model.Status' == 'Y') {
+                    $('#state_0').prop('checked', true);
+                }
+                else {
+                    $('#state_1').prop('checked', true);
+                }
             }
+
+     
 
         })
     })(jQuery);

@@ -285,20 +285,5 @@ namespace OutWeb.Modules.Manage
             SelectList typeList = new SelectList(types, "Value", "Text", defualt);
             return typeList;
         }
-
-        /// <summary>
-        /// 產品分類導覽列
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<int, string> CreateSchoolFontEndSiteMap()
-        {
-            Dictionary<int, string> scTypeDic = new Dictionary<int, string>();
-            scTypeDic = this.DB.WBPRODUCTTYPE
-                 .Where(o => o.PRD_TP_ST == "Y" && (this.DB.WBPRODUCT.Any(s => o.ID == s.MAP_PRODUCT_TP_ID)))
-                 .Select(s => new { s.ID, s.PRD_TP_NM })
-                 .ToDictionary(pair => pair.ID,
-                 pair => pair.PRD_TP_NM);
-            return scTypeDic;
-        }
     }
 }

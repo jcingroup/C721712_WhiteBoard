@@ -30,8 +30,8 @@ namespace OutWeb.Entities
         public virtual DbSet<WBNEWS> WBNEWS { get; set; }
         public virtual DbSet<WBPIC> WBPIC { get; set; }
         public virtual DbSet<WBPRODUCT> WBPRODUCT { get; set; }
-        public virtual DbSet<WBPRODUCTTYPE> WBPRODUCTTYPE { get; set; }
         public virtual DbSet<WBUSR> WBUSR { get; set; }
         public virtual DbSet<WBWORKS> WBWORKS { get; set; }
+        public virtual DbSet<WBPRODUCTTYPE> WBPRODUCTTYPE { get; set; }
     }
 }
