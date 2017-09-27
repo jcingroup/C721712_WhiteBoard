@@ -244,8 +244,8 @@ ModelManifest.xml
 # FAKE - F# Make
 /OutWeb/Images
 /OutWeb/ckeditor
-/OutWeb/Content/Upload
 /OutWeb/Content/doc
 /OutWeb/Content/sass
 /OutWeb/Content/images/sys/Tutorial
+/OutWeb/Content/images/index/banner - 複製.jpg
 /OutWeb/Content/sass_BK

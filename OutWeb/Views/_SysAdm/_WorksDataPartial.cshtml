@@ -47,7 +47,7 @@
                         <input id="images_s" type="file" onchange="postImages(this);" name="images" accept="image/*">
                         @*<button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>*@
                     </div>
-                    <small class="block text-secondary">可上傳 1 張圖片，建議尺寸 450*265px，建議檔案大小不超過 300kb</small>
+                    <small class="block text-secondary">可上傳 1 張圖片，建議尺寸 400*300px，每張圖最大不超過 200kb</small>
                     @if (Model.ImagesData != null)
                     {
                         if (Model.ImagesData.ID.HasValue)
@@ -70,7 +70,7 @@
                         <input id="images_m" type="file" onchange="postImages(this);" name="images" accept="image/*" multiple>
                         @*<button class="btn info sm oi" data-glyph="data-transfer-upload">上傳</button>*@
                     </div>
-                    <small class="block text-secondary">可上傳多張圖片，建議尺寸寬度不超過 1000px，建議檔案大小不超過 800kb</small>
+                    <small class="block text-secondary">可上傳多張圖片，建議尺寸寬度不超過 1000px，每張圖最大不超過 500kb</small>
                     @foreach (var img in Model.OtherImagesData)
                     {
                         string imgUrl = currentUrl + "/" + img.FileUrl;
@@ -78,7 +78,7 @@
 
                         <div class="uploaded up-multiple" from="server">
                             <button class="close" type="button" del-obj="m" id="@img.FileName">&times;</button>
-                            <a href="@imgUrl" target="new"><img src="@imgUrl" alt="小圖"></a>
+                            <a href="@imgUrl" target="new"><img src="@imgUrl" alt="小圖" width="100"></a>
                             <input type="hidden" id="imgID" name="OtherImagesData[@index].ID" value="@img.ID" />
                         </div>
                     }
