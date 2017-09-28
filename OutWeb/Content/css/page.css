@@ -674,7 +674,7 @@ svg {
   display: table;
   clear: both; }
 .field + .field {
-  margin-top: 30px; }
+  margin-top: 20px; }
 .field dt {
   font-weight: normal; }
 .field input, .field select {
@@ -758,13 +758,13 @@ figure {
   .newslist img {
     min-width: 100%;
     min-height: 100%;
-    max-width: 100%;
-    max-height: 100%; }
+    max-width: 100%; }
   .newslist h4 {
     position: absolute;
     left: 2%;
     width: 96%;
-    bottom: 47px; }
+    bottom: 47px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75); }
   .newslist .date {
     color: #333333;
     display: block;
@@ -1019,7 +1019,7 @@ figure {
 .m-32 {
   margin: 2rem; }
 
-.mt-32 {
+.mt-32, .editor {
   margin-top: 2rem; }
 
 .mr-32 {
@@ -1583,3 +1583,9 @@ figure {
   list-style-type: circle; }
   .text-list li {
     border-bottom: 1px solid #f8f8f8; }
+
+.editor {
+  word-wrap: normal;
+  word-break: break-all; }
+  .editor img {
+    max-width: 100% !important; }

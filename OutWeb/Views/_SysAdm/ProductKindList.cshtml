@@ -116,12 +116,9 @@
 @using (Html.BeginForm("ProductKindList", "_SysAdm", FormMethod.Get, new { id = "formManageProductKind" }))
 {
     <div class="alert-warning mb-16">
-        <strong>前台排序：</strong> 數字愈大愈前面。<br>
-        <strong>刪除：</strong> 請先將產品資料裡，有使用該分類的產品先修改為其他分類，再刪除該分類。
-        <span class="text-danger">
-            當分類已被任一產品引用，不論狀態為何 皆不可以刪除該分類。
-
-        </span> @* 這裡要說明刪除規則 *@
+        <strong>排序：</strong> 數字愈大愈前面。<br>
+        <strong>刪除：</strong> 若該分類已被產品使用時，該分類不可刪除。<br>
+        <strong>停用：</strong> 若該分類底下有產品的前台顯示狀態為「顯示」時，該分類無法停用。
     </div>
 
     <div class="topBtn-bar btn-group">
@@ -156,7 +153,7 @@
             <th class="item-edit">修改</th>
             <th class="text-left"><button id="sortName" sort-type="" class="th-sort-toggle" type="button">分類名稱</button></th>
             <th><button id="sortStatus" sort-type="" class="th-sort-toggle" type="button">狀態</button></th>
-            <th><button id="sortIndex" sort-type="" class="th-sort-toggle" type="button">前台排序</button></th>
+            <th><button id="sortIndex" sort-type="" class="th-sort-toggle" type="button">排序</button></th>
         </tr>
 
         @if (Model.Result.Data.Count == 0)

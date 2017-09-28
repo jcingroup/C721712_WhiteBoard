@@ -540,13 +540,13 @@ figure {
   .newslist img {
     min-width: 100%;
     min-height: 100%;
-    max-width: 100%;
-    max-height: 100%; }
+    max-width: 100%; }
   .newslist h4 {
     position: absolute;
     left: 2%;
     width: 96%;
-    bottom: 47px; }
+    bottom: 47px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75); }
   .newslist .date {
     color: #333333;
     display: block;
@@ -1265,19 +1265,23 @@ figure {
 
 .swiper-pager {
   position: absolute;
-  bottom: 6px !important;
+  bottom: 220px !important;
+  right: 0;
+  z-index: 2;
   text-align: right;
   max-width: 1400px;
-  padding-right: 2%;
-  z-index: 2; }
+  margin: auto;
+  padding-right: 101px; }
+  @media (min-width: 87.5em) {
+    .swiper-pager {
+      padding-right: 65px; } }
 
 .swiper-pagination-bullet {
-  width: 13px !important;
-  height: 13px !important;
-  background: rgba(255, 255, 255, 0.4) !important;
-  opacity: .5 !important; }
+  width: 12px !important;
+  height: 12px !important;
+  background: #fff !important; }
   .swiper-pagination-bullet-active {
-    opacity: 1 !important; }
+    background: #000 !important; }
 
 .card {
   position: absolute;
