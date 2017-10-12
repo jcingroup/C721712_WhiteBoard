@@ -93,7 +93,7 @@ namespace OutWeb.Controllers
         public ActionResult ProductKindEdit(int? ID)
         {
             if (!ID.HasValue)
-                return RedirectToAction("ProductKind");
+                return RedirectToAction("ProductKindList");
             ListModuleService module = ListFactoryService.Create(Enums.ListMethodType.PRODUCTKIND);
             ProductKindDetailsDataModel model = (module.DoGetDetailsByID((int)ID) as ProductKindDetailsDataModel);
             if (model == null)

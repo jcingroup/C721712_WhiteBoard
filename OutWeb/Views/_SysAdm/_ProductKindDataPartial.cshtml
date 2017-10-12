@@ -34,12 +34,19 @@
 </dl>
 <footer class="submit-bar clear mt-24">
     <button class="btn success oi" data-glyph="circle-check" type="submit">確定儲存</button>
-    <button class="btn warning oi" data-glyph="circle-x" type="button" onclick="location.href='ProductKindList'">回到列表</button>
+    <button class="btn warning oi" data-glyph="circle-x" type="button" id="bakList">回到列表</button>
 </footer>
 
 <script>
     (function ($) {
         $(function () {
+            $("#bakList").click(function (event) {
+                event.preventDefault();
+                var url = '@Url.Action("ProductKindList", "_SysAdm")';
+                window.location.href = url;
+            });
+
+
             $('#formManageProductKindData').submit(function () {
                 if ($('input[name=status]:checked').val() == 'N') {
                     var id = @Model.ID;

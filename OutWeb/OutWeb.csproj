@@ -1560,7 +1560,7 @@
     <Content Include="Views\_SysAdm\NewsEdit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_SysAdm\ProductDataEdit.cshtml" />
-    <Content Include="Views\_SysAdm\_ProductKindDataPartia.cshtml" />
+    <Content Include="Views\_SysAdm\_ProductKindDataPartial.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindAdd.cshtml" />
     <Content Include="Views\_SysAdm\ProductKindEdit.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
