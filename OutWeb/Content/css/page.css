@@ -564,6 +564,7 @@ output {
 #footer {
   background: #c4c4c4;
   color: inherit;
+  min-width: 1200px;
   min-height: 124px;
   margin-top: -124px;
   z-index: 2;

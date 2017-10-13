@@ -364,6 +364,7 @@ dd {
 #footer {
   background: #c4c4c4;
   color: inherit;
+  min-width: 1200px;
   min-height: 124px;
   margin-top: -124px;
   z-index: 2;
@@ -1260,8 +1261,7 @@ figure {
 
 .swiper-slide {
   background-position: center 0;
-  background-repeat: no-repeat;
-  background-attachment: fixed; }
+  background-repeat: no-repeat; }
 
 .swiper-pager {
   position: absolute;
@@ -1279,7 +1279,8 @@ figure {
 .swiper-pagination-bullet {
   width: 12px !important;
   height: 12px !important;
-  background: #fff !important; }
+  background: #fff !important;
+  opacity: .7 !important; }
   .swiper-pagination-bullet-active {
     background: #000 !important; }
 
